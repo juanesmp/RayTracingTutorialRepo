@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <iostream>
 #include <fstream>
+#include "Vec3.h"
 
 int main()
 {
@@ -20,13 +21,11 @@ int main()
 		{
 			for (int i = 0; i < nx; i++)
 			{
-				float r = float(i) / float(nx);
-				float g = float(j) / float(ny);
-				float b = 0.2f;
+				Vec3 col = Vec3(float(i) / float(nx), float(j) / float(ny), 0.2f);
 
-				int ir = int(255.99 * r);
-				int ig = int(255.99 * g);
-				int ib = int(255.99 * b);
+				int ir = int(255.99 * col.R());
+				int ig = int(255.99 * col.G());
+				int ib = int(255.99 * col.B());
 
 				ppmFile << ir << " " << ig << " " << ib << "\n";
 			}
