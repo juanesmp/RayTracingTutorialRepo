@@ -6,11 +6,43 @@
 #include <fstream>
 #include "Vec3.h"
 #include "Ray.h"
+#include "raytracingtutorial.h"
 
-Vec3 GetColorFromRay(const Ray& r)
+
+float GetRayLenghtToHitSphere(const Vec3& center, float radius, const Ray& ray)
+{
+	Vec3 oc = ray.origin - center;
+	float a = Dot(ray.direction, ray.direction);
+	float b = 2.0f * Dot(oc, ray.direction);
+	float c = Dot(oc, oc) - radius * radius;
+	float discriminant = b * b - 4 * a * c;
+	
+	if (discriminant < 0)
+		return -1.0f;
+	else
+		return (-b - sqrtf(discriminant)) / (2.0f * a);
+}
+
+Vec3 GetBackgroundColor(const Ray& r)
 {
 	Vec3 unitDirection = ConvertToUnitVector(r.direction);
-	return Vec3(unitDirection.X(), 0, 0);
+	float t = 0.5f * (unitDirection.Y() + 1);
+	return (1.0f - t) * Vec3(1, 1, 1) + t * Vec3(0.5f, 0.7f, 1);
+}
+
+Vec3 GetColorFromRay(const Ray& ray)
+{
+	Vec3 sphereCenter = Vec3(0, 0, -1);
+	float t = GetRayLenghtToHitSphere(sphereCenter, 0.5f, ray);
+	if (t > 0)
+	{
+		Vec3 normal = ConvertToUnitVector(ray.GetPointAtLenght(t) - sphereCenter);
+		return 0.5f * Vec3(normal.X() + 1.0f, normal.Y() + 1.0f, normal.Z() + 1.0f);
+	}
+	else
+	{
+		return GetBackgroundColor(ray);
+	}
 }
 
 int main()

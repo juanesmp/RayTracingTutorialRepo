@@ -33,6 +33,11 @@ inline Vec3 operator+(const Vec3 & v1, const Vec3& v2)
 	return Vec3(v1.e[0] + v2.e[0], v1.e[1] + v2.e[1], v1.e[2] + v2.e[2]);
 }
 
+inline Vec3 operator-(const Vec3 & v1, const Vec3& v2)
+{
+	return Vec3(v1.e[0] - v2.e[0], v1.e[1] - v2.e[1], v1.e[2] - v2.e[2]);
+}
+
 inline Vec3 operator*(const Vec3 & v, float t)
 {
 	return Vec3(t * v.e[0], t * v.e[1], t * v.e[2]);
@@ -51,4 +56,9 @@ inline Vec3 operator/(const Vec3 & v, float t)
 inline Vec3 ConvertToUnitVector(Vec3 v)
 {
 	return v / v.GetLenght();
+}
+
+inline float Dot(const Vec3 & v1, const Vec3& v2)
+{
+	return v1.e[0] * v2.e[0] + v1.e[1] * v2.e[1] + v1.e[2] * v2.e[2];
 }
