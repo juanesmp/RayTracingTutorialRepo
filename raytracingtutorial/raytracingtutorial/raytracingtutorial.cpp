@@ -9,6 +9,14 @@
 #include "Hitable.h"
 #include "Sphere.h"
 #include "HitableList.h"
+#include "Camera.h"
+
+struct OutputParams
+{
+	int pixelSizeX = 400;
+	int pixelSizeY = 200;
+	int aaSampleCount = 8;
+};
 
 Vec3 GetBackgroundColor(const Ray& r)
 {
@@ -27,38 +35,44 @@ Vec3 GetColorFromRay(const Ray& ray, Hitable* scene)
 		return GetBackgroundColor(ray);
 }
 
+Vec3 GetColor(int pixelX, int pixelY, Camera camera, Hitable* scene, const OutputParams& outputParams)
+{
+	Vec3 col(0, 0, 0);
+	for (int sample = 0; sample < outputParams.aaSampleCount; sample++)
+	{
+		float u = float(pixelX + ((float)sample / (float)outputParams.aaSampleCount)) / float(outputParams.pixelSizeX);
+		float v = float(pixelY + ((float)sample / (float)outputParams.aaSampleCount)) / float(outputParams.pixelSizeY);
+
+		Ray r = camera.GetRay(u, v);
+		col += GetColorFromRay(r, scene);
+	}
+	col /= float(outputParams.aaSampleCount);
+
+	return col;
+}
+
 int main()
 {
 	std::ofstream ppmFile("image.ppm");
 
 	if (ppmFile.is_open())
 	{
-		int outputSizeX = 400;
-		int oputputSizeY = 200;
+		OutputParams outputParams;
 		
-		ppmFile << "P3\n" << outputSizeX << " " << oputputSizeY << "\n255\n";
+		ppmFile << "P3\n" << outputParams.pixelSizeX << " " << outputParams.pixelSizeY << "\n255\n";
 
-		Vec3 vpLowerLeftCorner(-2, -1, -1);
-		Vec3 vpHorizontal(4, 0, 0);
-		Vec3 vpVertical(0, 2, 0);
-		
-		Vec3 cameraPosition(0, 0, 0);
+		Camera camera;
 
 		Hitable* list[2];
 		list[0] = new Sphere(Vec3(0, 0, -1), 0.5f);
 		list[1] = new Sphere(Vec3(0, -100.5f, -1), 100);
 		Hitable* scene = new HitableList(list, 2);
 
-		for (int j = oputputSizeY - 1; j >= 0; j--)
+		for (int pixelY = outputParams.pixelSizeY - 1; pixelY >= 0; pixelY--)
 		{
-			for (int i = 0; i < outputSizeX; i++)
+			for (int pixelX = 0; pixelX < outputParams.pixelSizeX; pixelX++)
 			{
-				float u = float(i) / float(outputSizeX);
-				float v = float(j) / float(oputputSizeY);
-				
-				Ray r(cameraPosition, vpLowerLeftCorner + u * vpHorizontal + v * vpVertical);
-				
-				Vec3 col = GetColorFromRay(r, scene);
+				Vec3 col = GetColor(pixelX, pixelY, camera, scene, outputParams);
 
 				int ir = int(255.99 * col.R());
 				int ig = int(255.99 * col.G());

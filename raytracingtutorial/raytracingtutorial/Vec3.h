@@ -16,9 +16,37 @@ public:
 	inline float G() const { return e[1]; }
 	inline float B() const { return e[2]; }
 
-	inline Vec3& operator+=(const Vec3& v);
-	inline Vec3& operator*=(const float t);
-	inline Vec3& operator/=(const float t);
+	inline Vec3& operator+=(const Vec3& v)
+	{
+		e[0] += v.e[0];
+		e[1] += v.e[1];
+		e[2] += v.e[2];
+		return *this;
+	}
+
+	inline Vec3& operator-=(const Vec3& v)
+	{
+		e[0] -= v.e[0];
+		e[1] -= v.e[1];
+		e[2] -= v.e[2];
+		return *this;
+	}
+
+	inline Vec3& operator*=(const float t)
+	{
+		e[0] *= t;
+		e[1] *= t;
+		e[2] *= t;
+		return *this;
+	}
+
+	inline Vec3& operator/=(const float t)
+	{
+		e[0] /= t;
+		e[1] /= t;
+		e[2] /= t;
+		return *this;
+	}
 
 	inline float GetLenght() const
 	{
