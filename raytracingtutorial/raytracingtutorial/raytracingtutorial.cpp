@@ -6,22 +6,9 @@
 #include <fstream>
 #include "Vec3.h"
 #include "Ray.h"
-#include "raytracingtutorial.h"
-
-
-float GetRayLenghtToHitSphere(const Vec3& center, float radius, const Ray& ray)
-{
-	Vec3 oc = ray.origin - center;
-	float a = Dot(ray.direction, ray.direction);
-	float b = 2.0f * Dot(oc, ray.direction);
-	float c = Dot(oc, oc) - radius * radius;
-	float discriminant = b * b - 4 * a * c;
-	
-	if (discriminant < 0)
-		return -1.0f;
-	else
-		return (-b - sqrtf(discriminant)) / (2.0f * a);
-}
+#include "Hitable.h"
+#include "Sphere.h"
+#include "HitableList.h"
 
 Vec3 GetBackgroundColor(const Ray& r)
 {
@@ -30,19 +17,14 @@ Vec3 GetBackgroundColor(const Ray& r)
 	return (1.0f - t) * Vec3(1, 1, 1) + t * Vec3(0.5f, 0.7f, 1);
 }
 
-Vec3 GetColorFromRay(const Ray& ray)
+Vec3 GetColorFromRay(const Ray& ray, Hitable* scene)
 {
-	Vec3 sphereCenter = Vec3(0, 0, -1);
-	float t = GetRayLenghtToHitSphere(sphereCenter, 0.5f, ray);
-	if (t > 0)
-	{
-		Vec3 normal = ConvertToUnitVector(ray.GetPointAtLenght(t) - sphereCenter);
-		return 0.5f * Vec3(normal.X() + 1.0f, normal.Y() + 1.0f, normal.Z() + 1.0f);
-	}
+	HitRecord hit;
+
+	if (scene->DoesHit(ray, 0, 100000, hit))
+		return 0.5f * Vec3(hit.normal.X() + 1.0f, hit.normal.Y() + 1.0f, hit.normal.Z() + 1.0f);
 	else
-	{
 		return GetBackgroundColor(ray);
-	}
 }
 
 int main()
@@ -51,26 +33,32 @@ int main()
 
 	if (ppmFile.is_open())
 	{
-		int nx = 200;
-		int ny = 100;
+		int outputSizeX = 400;
+		int oputputSizeY = 200;
 		
-		ppmFile << "P3\n" << nx << " " << ny << "\n255\n";
+		ppmFile << "P3\n" << outputSizeX << " " << oputputSizeY << "\n255\n";
 
-		Vec3 lowerLeftCorner(-2, -1, -1);
-		Vec3 horizontal(4, 0, 0);
-		Vec3 vertical(0, 2, 0);
-		Vec3 origin(0, 0, 0);
+		Vec3 vpLowerLeftCorner(-2, -1, -1);
+		Vec3 vpHorizontal(4, 0, 0);
+		Vec3 vpVertical(0, 2, 0);
+		
+		Vec3 cameraPosition(0, 0, 0);
 
-		for (int j = ny - 1; j >= 0; j--)
+		Hitable* list[2];
+		list[0] = new Sphere(Vec3(0, 0, -1), 0.5f);
+		list[1] = new Sphere(Vec3(0, -100.5f, -1), 100);
+		Hitable* scene = new HitableList(list, 2);
+
+		for (int j = oputputSizeY - 1; j >= 0; j--)
 		{
-			for (int i = 0; i < nx; i++)
+			for (int i = 0; i < outputSizeX; i++)
 			{
-				float u = float(i) / float(nx);
-				float v = float(j) / float(ny);
+				float u = float(i) / float(outputSizeX);
+				float v = float(j) / float(oputputSizeY);
 				
-				Ray r(origin, lowerLeftCorner + u * horizontal + v * vertical);
+				Ray r(cameraPosition, vpLowerLeftCorner + u * vpHorizontal + v * vpVertical);
 				
-				Vec3 col = GetColorFromRay(r);
+				Vec3 col = GetColorFromRay(r, scene);
 
 				int ir = int(255.99 * col.R());
 				int ig = int(255.99 * col.G());
