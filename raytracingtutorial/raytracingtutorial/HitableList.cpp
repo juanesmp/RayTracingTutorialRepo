@@ -1,17 +1,17 @@
 #include "pch.h"
 #include "HitableList.h"
 
-bool HitableList::DoesHit(const Ray & ray, float minLenght, float maxLenght, HitRecord & hit) const
+bool HitableList::DoesHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const
 {
 	HitRecord tempHit;
 	bool doesHit = false;
-	float closestLenght = maxLenght;
+	float closestLength = maxLength;
 	for (int i = 0; i < listSize; i++)
 	{
-		if (list[i]->DoesHit(ray, minLenght, closestLenght, tempHit))
+		if (list[i]->DoesHit(ray, minLength, closestLength, tempHit))
 		{
 			doesHit = true;
-			closestLenght = tempHit.lenght;
+			closestLength = tempHit.length;
 			hit = tempHit;
 		}
 	}

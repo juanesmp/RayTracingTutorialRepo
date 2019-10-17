@@ -2,15 +2,18 @@
 
 #include "Ray.h"
 
+class Material;
+
 struct HitRecord
 {
-	float lenght;
+	float length;
 	Vec3 point;
 	Vec3 normal;
+	Material* pMaterial;
 };
 
 class Hitable
 {
 public:
-	virtual bool DoesHit(const Ray& ray, float minLenght, float maxLenght, HitRecord& hit) const = 0;
+	virtual bool DoesHit(const Ray& ray, float minLength, float maxLength, HitRecord& hit) const = 0;
 };

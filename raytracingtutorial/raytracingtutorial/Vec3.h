@@ -48,9 +48,14 @@ public:
 		return *this;
 	}
 
-	inline float GetLenght() const
+	inline float GetLength() const
 	{
 		return float(sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]));
+	}
+
+	inline float GetSquaredLength() const
+	{
+		return e[0] * e[0] + e[1] * e[1] + e[2] * e[2];
 	}
 
 	float e[3];
@@ -64,6 +69,11 @@ inline Vec3 operator+(const Vec3 & v1, const Vec3& v2)
 inline Vec3 operator-(const Vec3 & v1, const Vec3& v2)
 {
 	return Vec3(v1.e[0] - v2.e[0], v1.e[1] - v2.e[1], v1.e[2] - v2.e[2]);
+}
+
+inline Vec3 operator*(const Vec3 & v1, const Vec3 & v2)
+{
+	return Vec3(v1.e[0] * v2.e[0], v1.e[1] * v2.e[1], v1.e[2] * v2.e[2]);
 }
 
 inline Vec3 operator*(const Vec3 & v, float t)
@@ -83,7 +93,7 @@ inline Vec3 operator/(const Vec3 & v, float t)
 
 inline Vec3 ConvertToUnitVector(Vec3 v)
 {
-	return v / v.GetLenght();
+	return v / v.GetLength();
 }
 
 inline float Dot(const Vec3 & v1, const Vec3& v2)

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Sphere.h"
 
-bool Sphere::DoesHit(const Ray & ray, float minLenght, float maxLenght, HitRecord & hit) const
+bool Sphere::DoesHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const
 {
 	Vec3 oc = ray.origin - center;
 	float a = Dot(ray.direction, ray.direction);
@@ -12,7 +12,7 @@ bool Sphere::DoesHit(const Ray & ray, float minLenght, float maxLenght, HitRecor
 	if (discriminant > 0)
 	{
 		float length = (-b - sqrtf(discriminant)) / a;
-		if (length < maxLenght && length > minLenght)
+		if (length < maxLength && length > minLength)
 		{
 			FillHitRecord(length, ray, hit);
 			return true;
@@ -20,7 +20,7 @@ bool Sphere::DoesHit(const Ray & ray, float minLenght, float maxLenght, HitRecor
 		else
 		{
 			length = (-b + sqrtf(discriminant)) / a;
-			if (length < maxLenght && length > minLenght)
+			if (length < maxLength && length > minLength)
 			{
 				FillHitRecord(length, ray, hit);
 				return true;
@@ -33,7 +33,8 @@ bool Sphere::DoesHit(const Ray & ray, float minLenght, float maxLenght, HitRecor
 
 void Sphere::FillHitRecord(float length, const Ray & ray, HitRecord & hit) const
 {
-	hit.lenght = length;
-	hit.point = ray.GetPointAtLenght(length);
+	hit.length = length;
+	hit.point = ray.GetPointAtLength(length);
 	hit.normal = (hit.point - center) / radius;
+	hit.pMaterial = pMaterial;
 }
