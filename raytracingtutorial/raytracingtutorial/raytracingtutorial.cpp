@@ -12,6 +12,7 @@
 #include "Material.h"
 #include "LambertianMaterial.h"
 #include "MetalMaterial.h"
+#include "DielectricMaterial.h"
 
 struct OutputParams
 {
@@ -76,10 +77,10 @@ Hitable* CreateScene()
 {
 	Hitable** list = new Hitable*[4];
 
-	list[0] = new Sphere(Vec3(0, 0, -1),       0.5f, new LambertianMaterial(Vec3(0.8f, 0.3f, 0.3f)));
+	list[0] = new Sphere(Vec3(0, 0, -1),       0.5f, new LambertianMaterial(Vec3(0.1f, 0.2f, 0.5f)));
 	list[1] = new Sphere(Vec3(0, -100.5f, -1), 100,  new LambertianMaterial(Vec3(0.8f, 0.8f, 0.0f)));
 	list[2] = new Sphere(Vec3(1, 0, -1),       0.5f, new MetalMaterial(Vec3(0.8f, 0.6f, 0.2f), 1.0f));
-	list[3] = new Sphere(Vec3(-1, 0, -1),      0.5f, new MetalMaterial(Vec3(0.8f, 0.8f, 0.8f), 0.3f));
+	list[3] = new Sphere(Vec3(-1, 0, -1),      0.5f, new DielectricMaterial(1.5f));
 
 	return new HitableList(list, 4);
 }

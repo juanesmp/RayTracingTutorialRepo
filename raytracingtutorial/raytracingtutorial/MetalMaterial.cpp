@@ -9,8 +9,3 @@ bool MetalMaterial::Scatter(const Ray & rayIn, const HitRecord & hit, Vec3 & att
 	attenuation = albedoColor;
 	return Dot(scatteredRay.direction, hit.normal) > 0;
 }
-
-Vec3 MetalMaterial::Reflect(const Vec3 & v, const Vec3 & normal) const
-{
-	return v - 2.0f * Dot(v, normal) * normal;
-}

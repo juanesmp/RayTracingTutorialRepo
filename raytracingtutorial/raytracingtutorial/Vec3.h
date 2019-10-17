@@ -16,6 +16,8 @@ public:
 	inline float G() const { return e[1]; }
 	inline float B() const { return e[2]; }
 
+	inline Vec3 operator-() const { return Vec3(-e[0], -e[1], -e[2]); }
+
 	inline Vec3& operator+=(const Vec3& v)
 	{
 		e[0] += v.e[0];
@@ -100,3 +102,7 @@ inline float Dot(const Vec3 & v1, const Vec3& v2)
 {
 	return v1.e[0] * v2.e[0] + v1.e[1] * v2.e[1] + v1.e[2] * v2.e[2];
 }
+
+Vec3 Reflect(const Vec3 & v, const Vec3 & normal);
+
+bool Refract(const Vec3& v, const Vec3& normal, float niOverNt, Vec3& refracted);
