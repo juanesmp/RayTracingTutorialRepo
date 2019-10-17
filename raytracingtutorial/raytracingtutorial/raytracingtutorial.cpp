@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <iostream>
 #include <fstream>
-#include "Vec3.h"
 #include "Ray.h"
 #include "Hitable.h"
 #include "Sphere.h"
@@ -73,6 +72,18 @@ Vec3 GetColorForPixel(int pixelX, int pixelY, Camera camera, Hitable* scene, con
 	return CorrectGamma(col);
 }
 
+Hitable* CreateScene()
+{
+	Hitable** list = new Hitable*[4];
+
+	list[0] = new Sphere(Vec3(0, 0, -1),       0.5f, new LambertianMaterial(Vec3(0.8f, 0.3f, 0.3f)));
+	list[1] = new Sphere(Vec3(0, -100.5f, -1), 100,  new LambertianMaterial(Vec3(0.8f, 0.8f, 0.0f)));
+	list[2] = new Sphere(Vec3(1, 0, -1),       0.5f, new MetalMaterial(Vec3(0.8f, 0.6f, 0.2f), 1.0f));
+	list[3] = new Sphere(Vec3(-1, 0, -1),      0.5f, new MetalMaterial(Vec3(0.8f, 0.8f, 0.8f), 0.3f));
+
+	return new HitableList(list, 4);
+}
+
 int main()
 {
 	std::ofstream ppmFile("image.ppm");
@@ -80,19 +91,10 @@ int main()
 	if (ppmFile.is_open())
 	{
 		OutputParams outputParams;
-		
-		ppmFile << "P3\n" << outputParams.pixelSizeX << " " << outputParams.pixelSizeY << "\n255\n";
-
 		Camera camera;
+		Hitable* scene = CreateScene();
 
-		Hitable* list[4];
-		
-		list[0] = new Sphere(Vec3(0, 0, -1),       0.5f, new LambertianMaterial(Vec3(0.8f, 0.3f, 0.3f)));
-		list[1] = new Sphere(Vec3(0, -100.5f, -1), 100,  new LambertianMaterial(Vec3(0.8f, 0.8f, 0.0f)));
-		list[2] = new Sphere(Vec3(1, 0, -1),       0.5f, new MetalMaterial(Vec3(0.8f, 0.6f, 0.2f)));
-		list[3] = new Sphere(Vec3(-1, 0, -1),      0.5f, new MetalMaterial(Vec3(0.8f, 0.8f, 0.8f)));
-
-		Hitable* scene = new HitableList(list, 4);
+		ppmFile << "P3\n" << outputParams.pixelSizeX << " " << outputParams.pixelSizeY << "\n255\n";
 
 		for (int pixelY = outputParams.pixelSizeY - 1; pixelY >= 0; pixelY--)
 		{

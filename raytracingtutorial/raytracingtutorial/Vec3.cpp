@@ -1,7 +1,6 @@
 #include "pch.h"
-#include <math.h>
 #include "Vec3.h"
-
+#include <math.h>
 
 Vec3::Vec3()
 {

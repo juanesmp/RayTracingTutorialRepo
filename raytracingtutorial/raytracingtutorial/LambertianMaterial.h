@@ -9,8 +9,6 @@ public:
 	virtual bool Scatter(const Ray & rayIn, const HitRecord & hit, Vec3 & attenuation, Ray & scatteredRay) const override;
 
 private:
-	Vec3 GetRandomVec3InUnitSphere() const;
-
 	Vec3 albedoColor;
 };
 

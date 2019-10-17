@@ -10,13 +10,3 @@ bool LambertianMaterial::Scatter(const Ray & rayIn, const HitRecord & hit, Vec3 
 	return true;
 }
 
-Vec3 LambertianMaterial::GetRandomVec3InUnitSphere() const
-{
-	Vec3 p;
-	do
-	{
-		p = 2.0f * Vec3(GetRand0To1(), GetRand0To1(), GetRand0To1()) - Vec3(1, 1, 1);
-	} while (p.GetSquaredLength() >= 1.0f);
-
-	return p;
-}

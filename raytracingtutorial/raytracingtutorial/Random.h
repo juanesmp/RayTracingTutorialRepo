@@ -1,8 +1,6 @@
 #pragma once
 
-#include <stdlib.h> 
+class Vec3;
 
-float GetRand0To1()
-{
-	return float(rand()) / float(RAND_MAX + 1);
-}
+float GetRand0To1();
+Vec3 GetRandomVec3InUnitSphere();
