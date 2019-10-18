@@ -18,3 +18,14 @@ Vec3 GetRandomVec3InUnitSphere()
 
 	return p;
 }
+
+Vec3 GetRandomVec3InUnitDisk()
+{
+	Vec3 p;
+	do
+	{
+		p = 2.0f * Vec3(GetRand0To1(), GetRand0To1(), 0) - Vec3(1, 1, 0);
+	} while (Dot(p, p) >= 1.0f);
+
+	return p;
+}
