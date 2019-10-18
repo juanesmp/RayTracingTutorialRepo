@@ -5,10 +5,11 @@
 class Camera
 {
 public:
-	Camera();
+	Camera(const Vec3& position, const Vec3& lookAtPoint, const Vec3& upVector, float verticalFOV, float aspect);
 
 	Ray GetRay(float screenU, float screenV);
 
+private:
 	Vec3 position;
 
 	Vec3 vpLowerLeftCorner;

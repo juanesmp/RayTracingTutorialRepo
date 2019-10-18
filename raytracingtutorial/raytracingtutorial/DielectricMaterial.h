@@ -9,6 +9,7 @@ public:
 	virtual bool Scatter(const Ray & rayIn, const HitRecord & hit, Vec3 & attenuation, Ray & scatteredRay) const override;
 
 private:
+	float SchlickProbability(float cosine) const;
 	float refIdx;
 };
 

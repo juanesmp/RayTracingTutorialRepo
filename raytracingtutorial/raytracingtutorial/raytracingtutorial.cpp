@@ -75,14 +75,15 @@ Vec3 GetColorForPixel(int pixelX, int pixelY, Camera camera, Hitable* scene, con
 
 Hitable* CreateScene()
 {
-	Hitable** list = new Hitable*[4];
+	Hitable** list = new Hitable*[5];
 
 	list[0] = new Sphere(Vec3(0, 0, -1),       0.5f, new LambertianMaterial(Vec3(0.1f, 0.2f, 0.5f)));
 	list[1] = new Sphere(Vec3(0, -100.5f, -1), 100,  new LambertianMaterial(Vec3(0.8f, 0.8f, 0.0f)));
-	list[2] = new Sphere(Vec3(1, 0, -1),       0.5f, new MetalMaterial(Vec3(0.8f, 0.6f, 0.2f), 1.0f));
+	list[2] = new Sphere(Vec3(1, 0, -1),       0.5f, new MetalMaterial(Vec3(0.8f, 0.6f, 0.2f), 0.2f));
 	list[3] = new Sphere(Vec3(-1, 0, -1),      0.5f, new DielectricMaterial(1.5f));
+	list[4] = new Sphere(Vec3(-1, 0, -1),      -0.45f, new DielectricMaterial(1.5f));
 
-	return new HitableList(list, 4);
+	return new HitableList(list, 5);
 }
 
 int main()
@@ -92,7 +93,7 @@ int main()
 	if (ppmFile.is_open())
 	{
 		OutputParams outputParams;
-		Camera camera;
+		Camera camera(Vec3(-2, 2, 1), Vec3(0, 0, -1), Vec3(0, 1, 0), 45, float(outputParams.pixelSizeX) / float(outputParams.pixelSizeY));
 		Hitable* scene = CreateScene();
 
 		ppmFile << "P3\n" << outputParams.pixelSizeX << " " << outputParams.pixelSizeY << "\n255\n";
