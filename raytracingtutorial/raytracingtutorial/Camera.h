@@ -11,6 +11,8 @@ struct CameraParams
 	float aspectRatio;
 	float aperture;
 	float focusDistance;
+	float shutterOpenTime;
+	float shutterCloseTime;
 };
 
 class Camera
@@ -29,5 +31,8 @@ private:
 
 	Vec3 uAxis, vAxis;
 	float lensRadius;
+
+	float shutterOpenTime;
+	float shutterOpenDuration;
 };
 

@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Materials">
+      <UniqueIdentifier>{9b84f14f-771d-4d06-b4b6-600151da1559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Hitables">
+      <UniqueIdentifier>{e0de3ae9-e289-4fe4-a59d-07d90bfc831f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Materials">
+      <UniqueIdentifier>{86216e4a-d8b2-4ab1-a53a-20c855925d15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hitables">
+      <UniqueIdentifier>{ee2580db-3d90-4512-a247-96c62d0dab25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -24,32 +36,35 @@
     <ClInclude Include="Ray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Hitable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HitableList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LambertianMaterial.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MetalMaterial.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="LambertianMaterial.h">
+      <Filter>Header Files\Materials</Filter>
     </ClInclude>
     <ClInclude Include="DielectricMaterial.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="MetalMaterial.h">
+      <Filter>Header Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Hitable.h">
+      <Filter>Header Files\Hitables</Filter>
+    </ClInclude>
+    <ClInclude Include="HitableList.h">
+      <Filter>Header Files\Hitables</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingSphere.h">
+      <Filter>Header Files\Hitables</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Header Files\Hitables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,29 +80,32 @@
     <ClCompile Include="Ray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HitableList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LambertianMaterial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MetalMaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DielectricMaterial.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="HitableList.cpp">
+      <Filter>Source Files\Hitables</Filter>
+    </ClCompile>
+    <ClCompile Include="LambertianMaterial.cpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="MetalMaterial.cpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingSphere.cpp">
+      <Filter>Source Files\Hitables</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Source Files\Hitables</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

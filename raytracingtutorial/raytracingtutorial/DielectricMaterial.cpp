@@ -26,10 +26,10 @@ bool DielectricMaterial::Scatter(const Ray & rayIn, const HitRecord & hit, Vec3 
 	}
 
 	Vec3 refractedRay;
-	if (Refract(rayIn.direction, outwardNormal, niOverNt, refractedRay) && SchlickProbability(cosine) < GetRand0To1())
-		scatteredRay = Ray(hit.point, refractedRay);
+	if (Refract(rayIn.direction, outwardNormal, niOverNt, refractedRay) && SchlickProbability(cosine) < GetRandom0To1())
+		scatteredRay = Ray(hit.point, refractedRay, rayIn.time);
 	else
-		scatteredRay = Ray(hit.point, Reflect(rayIn.direction, hit.normal));
+		scatteredRay = Ray(hit.point, Reflect(rayIn.direction, hit.normal), rayIn.time);
 
 	return true;
 }
