@@ -35,7 +35,7 @@ Vec3 GetColorFromRay(const Ray& ray, Hitable* scene, int bounces, int maxRayBoun
 {
 	HitRecord hit;
 
-	if (scene->DoesHit(ray, 0.001f, 100000, hit))
+	if (scene->DoesRayHit(ray, 0.001f, 100000, hit))
 	{
 		Ray scatteredRay;
 		Vec3 attenuation;

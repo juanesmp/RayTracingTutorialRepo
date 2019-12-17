@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Sphere.h"
 
-bool Sphere::DoesHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const
+bool Sphere::DoesRayHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const
 {
 	Vec3 oc = ray.origin - center;
 	float a = Dot(ray.direction, ray.direction);
@@ -37,4 +37,9 @@ void Sphere::FillHitRecord(float length, const Ray & ray, HitRecord & hit) const
 	hit.point = ray.GetPointAtLength(length);
 	hit.normal = (hit.point - center) / radius;
 	hit.pMaterial = pMaterial;
+}
+
+bool Sphere::GetBoundingBoxAtTime(float startTime, float endTime, AABB & box) const
+{
+	return false;
 }

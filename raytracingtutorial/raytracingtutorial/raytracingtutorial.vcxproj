@@ -151,8 +151,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DielectricMaterial.h" />
+    <ClInclude Include="floatutils.h" />
     <ClInclude Include="MetalMaterial.h" />
     <ClInclude Include="MovingSphere.h" />
     <ClInclude Include="Random.h" />
@@ -166,6 +168,7 @@
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DielectricMaterial.cpp" />
     <ClCompile Include="HitableList.cpp" />

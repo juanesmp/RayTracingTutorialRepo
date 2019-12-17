@@ -3,6 +3,7 @@
 #include "Ray.h"
 
 class Material;
+class AABB;
 
 struct HitRecord
 {
@@ -15,5 +16,6 @@ struct HitRecord
 class Hitable
 {
 public:
-	virtual bool DoesHit(const Ray& ray, float minLength, float maxLength, HitRecord& hit) const = 0;
+	virtual bool DoesRayHit(const Ray& ray, float minLength, float maxLength, HitRecord& hit) const = 0;
+	virtual bool GetBoundingBoxAtTime(float startTime, float endTime, AABB& box) const = 0;
 };

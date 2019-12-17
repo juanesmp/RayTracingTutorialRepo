@@ -7,7 +7,7 @@ Vec3 MovingSphere::GetCenterAtTime(float time) const
 	return center0 + alpha * (center1 - center0);
 }
 
-bool MovingSphere::DoesHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const
+bool MovingSphere::DoesRayHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const
 {
 	Vec3 oc = ray.origin - GetCenterAtTime(ray.time);
 	float a = Dot(ray.direction, ray.direction);
@@ -43,4 +43,9 @@ void MovingSphere::FillHitRecord(float length, const Ray & ray, HitRecord & hit)
 	hit.point = ray.GetPointAtLength(length);
 	hit.normal = (hit.point - GetCenterAtTime(ray.time)) / radius;
 	hit.pMaterial = pMaterial;
+}
+
+bool MovingSphere::GetBoundingBoxAtTime(float startTime, float endTime, AABB & box) const
+{
+	return false;
 }

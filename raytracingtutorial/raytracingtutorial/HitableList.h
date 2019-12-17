@@ -13,7 +13,7 @@ public:
 		listSize = lSize; 
 	}
 
-	virtual bool DoesHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const override;
+	virtual bool DoesRayHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const override;
 	
 	Hitable **list;
 	int listSize;
