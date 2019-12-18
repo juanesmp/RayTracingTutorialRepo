@@ -75,6 +75,9 @@
     <ClInclude Include="BVHNode.h">
       <Filter>Header Files\Hitables</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

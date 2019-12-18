@@ -20,6 +20,7 @@ int CompareBoxes(const void * a, const void * b)
 BVHNode::BVHNode(Hitable ** hitableList, int hitableCount, float startTime, float endTime)
 {
 	qsort(hitableList, hitableCount, sizeof(Hitable*), CompareBoxes);
+
 	switch (hitableCount)
 	{
 	case 1:

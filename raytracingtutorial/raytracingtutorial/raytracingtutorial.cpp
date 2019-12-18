@@ -6,22 +6,40 @@
 #include <fstream>
 #include "Ray.h"
 #include "Hitable.h"
-#include "Sphere.h"
-#include "MovingSphere.h"
-#include "HitableList.h"
 #include "Camera.h"
 #include "Material.h"
-#include "LambertianMaterial.h"
-#include "MetalMaterial.h"
-#include "DielectricMaterial.h"
-#include "Random.h"
+#include "Scene.h"
 
 struct OutputParams
 {
-	int pixelSizeX = 250; // 400;
-	int pixelSizeY = 150; // 280;
-	int raysPerPixel = 128; // 128;
-	int maxRayBounces = 50; //50;
+	OutputParams(int quality) 
+	{
+		switch (quality)
+		{
+		case 0: // very low
+			pixelSizeX = 100;
+			pixelSizeY = 70;
+			raysPerPixel = 16;
+			maxRayBounces = 10;
+		case 1: // low
+			pixelSizeX = 250;
+			pixelSizeY = 150;
+			raysPerPixel = 128;
+			maxRayBounces = 50;
+		case 2: // medium
+		default:
+			pixelSizeX = 400;
+			pixelSizeY = 280;
+			raysPerPixel = 128;
+			maxRayBounces = 50;
+			break;
+		}	
+	};
+
+	int pixelSizeX;
+	int pixelSizeY;
+	int raysPerPixel;
+	int maxRayBounces;
 };
 
 Vec3 GetBackgroundColor(const Ray& r)
@@ -76,68 +94,7 @@ Vec3 GetColorForPixel(int pixelX, int pixelY, Camera* pCamera, Hitable* scene, c
 	return CorrectGamma(col);
 }
 
-Hitable* CreateBigScene()
-{
-	int sphereCount = 500;
-
-	Hitable** list = new Hitable*[sphereCount + 1];
-	list[0] = new Sphere(Vec3(0, -1000, 0), 1000, new LambertianMaterial(Vec3(0.5f, 0.5f, 0.5f)));
-
-	int i = 1;
-
-	for (int a = -11; a < 11; a++)
-	{
-		for (int b = -11; b < 11; b++)
-		{
-			float chooseMtrl = GetRandom0To1();
-			Vec3 center(a + 0.9f * GetRandom0To1(), 0.2f, b + 0.9f * GetRandom0To1());
-			if ((center - Vec3(4, 0.2f, 0)).GetLength() > 0.9f)
-			{
-				Material* pMaterial;
-				if (chooseMtrl < 0.8f)
-				{
-					Vec3 albedo(GetRandom0To1() * GetRandom0To1(), GetRandom0To1() * GetRandom0To1(), GetRandom0To1() * GetRandom0To1());
-					pMaterial = new LambertianMaterial(albedo);
-				}
-				else if (chooseMtrl < 0.95f)
-				{
-					Vec3 albedo(0.5f * (1.0f + GetRandom0To1()), 0.5f * (1.0f + GetRandom0To1()), 0.5f * (1.0f + GetRandom0To1()));
-					pMaterial = new MetalMaterial(albedo, 0.5f * GetRandom0To1());
-				}
-				else
-				{
-					pMaterial = new DielectricMaterial(1.5f);
-				}
-				list[i++] = new Sphere(center, 0.2f, pMaterial);
-			}
-		}
-	}
-
-	list[i++] = new Sphere(Vec3(0, 1, 0), 1.0f, new DielectricMaterial(1.5f));
-	list[i++] = new Sphere(Vec3(-4, 1, 0), 1.0f, new LambertianMaterial(Vec3(0.4f, 0.2f, 0.1f)));
-	list[i++] = new Sphere(Vec3(4, 1, 0), 1.0f, new MetalMaterial(Vec3(0.7f, 0.6f, 0.5f), 0));
-
-	return new HitableList(list, i);
-}
-
-Hitable* CreateScene()
-{
-	Hitable** list = new Hitable*[100];
-
-	int i = 0;
-
-	list[i++] = new Sphere(Vec3(0, -1000, 0), 1000, new LambertianMaterial(Vec3(0.5f, 0.5f, 0.5f)));
-
-	list[i++] = new Sphere(Vec3(0, 1, 0), 1.0f, new DielectricMaterial(1.5f));
-	list[i++] = new Sphere(Vec3(-4, 1, 0), 1.0f, new LambertianMaterial(Vec3(0.4f, 0.2f, 0.1f)));
-	list[i++] = new Sphere(Vec3(4, 1, 0), 1.0f, new MetalMaterial(Vec3(0.7f, 0.6f, 0.5f), 0));
-
-	list[i++] = new MovingSphere(Vec3(6, 1, 0), Vec3(5, 0.5f, 2.5f), 0, 0.1f, 0.2f, new LambertianMaterial(Vec3(0.4f, 0.2f, 0.8f)));
-
-	return new HitableList(list, i);
-}
-
-Camera* CreateCamera(const OutputParams& outputParams)
+Camera* CreateCamera(const OutputParams& outputParams, float shutterOpenTime, float shutterCloseTime)
 {
 	CameraParams p;
 
@@ -148,8 +105,8 @@ Camera* CreateCamera(const OutputParams& outputParams)
 	p.aspectRatio = float(outputParams.pixelSizeX) / float(outputParams.pixelSizeY);
 	p.aperture = 0.0001f; // 0.1f
 	p.focusDistance = (p.position - p.lookAtPoint).GetLength();
-	p.shutterOpenTime = 0.06f;
-	p.shutterCloseTime = 0.07f;
+	p.shutterOpenTime = shutterOpenTime;
+	p.shutterCloseTime = shutterCloseTime;
 
 	return new Camera(p);
 }
@@ -160,9 +117,14 @@ int main()
 
 	if (ppmFile.is_open())
 	{
-		OutputParams outputParams;
-		Camera* pCamera = CreateCamera(outputParams);
-		Hitable* scene = CreateScene();
+		OutputParams outputParams(1);
+
+		float shutterOpenTime = 0.06f;
+		float shutterCloseTime = 0.07f;
+		
+		Camera* pCamera = CreateCamera(outputParams, shutterOpenTime, shutterCloseTime);
+		
+		Hitable* scene = CreateScene(shutterOpenTime, shutterCloseTime);
 
 		ppmFile << "P3\n" << outputParams.pixelSizeX << " " << outputParams.pixelSizeY << "\n255\n";
 
