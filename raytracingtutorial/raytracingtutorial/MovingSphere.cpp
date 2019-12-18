@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MovingSphere.h"
+#include "AABB.h"
 
 Vec3 MovingSphere::GetCenterAtTime(float time) const
 {
@@ -47,5 +48,15 @@ void MovingSphere::FillHitRecord(float length, const Ray & ray, HitRecord & hit)
 
 bool MovingSphere::GetBoundingBoxAtTime(float startTime, float endTime, AABB & box) const
 {
-	return false;
+	Vec3 radiusVec = Vec3(radius, radius, radius);
+
+	Vec3 startCenter = GetCenterAtTime(startTime);
+	AABB startBox(startCenter - radiusVec, startCenter + radiusVec);
+
+	Vec3 endCenter = GetCenterAtTime(endTime);
+	AABB endBox(endCenter - radiusVec, endCenter + radiusVec);
+
+	box = CombineAABBs(startBox, endBox);
+	
+	return true;
 }

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Sphere.h"
+#include "AABB.h"
 
 bool Sphere::DoesRayHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const
 {
@@ -41,5 +42,7 @@ void Sphere::FillHitRecord(float length, const Ray & ray, HitRecord & hit) const
 
 bool Sphere::GetBoundingBoxAtTime(float startTime, float endTime, AABB & box) const
 {
-	return false;
+	Vec3 radiusVec = Vec3(radius, radius, radius);
+	box = AABB(center - radiusVec, center + radiusVec);
+	return true;
 }
