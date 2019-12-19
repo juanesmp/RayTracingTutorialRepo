@@ -87,6 +87,12 @@
     <ClInclude Include="CheckerTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DiffuseLightMaterial.h">
+      <Filter>Header Files\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -138,6 +144,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CheckerTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DiffuseLightMaterial.cpp">
+      <Filter>Source Files\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

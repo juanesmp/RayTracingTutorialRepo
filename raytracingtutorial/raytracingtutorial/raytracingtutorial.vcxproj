@@ -156,6 +156,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheckerTexture.h" />
     <ClInclude Include="DielectricMaterial.h" />
+    <ClInclude Include="DiffuseLightMaterial.h" />
     <ClInclude Include="floatutils.h" />
     <ClInclude Include="MetalMaterial.h" />
     <ClInclude Include="MovingSphere.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SingleColorTexture.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="SphereUtils.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
@@ -178,6 +180,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CheckerTexture.cpp" />
     <ClCompile Include="DielectricMaterial.cpp" />
+    <ClCompile Include="DiffuseLightMaterial.cpp" />
     <ClCompile Include="HitableList.cpp" />
     <ClCompile Include="LambertianMaterial.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -194,6 +197,7 @@
     <ClCompile Include="raytracingtutorial.cpp" />
     <ClCompile Include="SingleColorTexture.cpp" />
     <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="SphereUtils.cpp" />
     <ClCompile Include="Vec3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

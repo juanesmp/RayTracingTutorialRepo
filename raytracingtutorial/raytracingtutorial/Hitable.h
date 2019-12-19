@@ -11,6 +11,8 @@ struct HitRecord
 	Vec3 point;
 	Vec3 normal;
 	Material* pMaterial;
+	float textureU;
+	float textureV;
 };
 
 class Hitable

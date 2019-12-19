@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "Sphere.h"
 #include "AABB.h"
+#include "SphereUtils.h"
+
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 bool Sphere::DoesRayHit(const Ray & ray, float minLength, float maxLength, HitRecord & hit) const
 {
@@ -38,11 +42,11 @@ void Sphere::FillHitRecord(float length, const Ray & ray, HitRecord & hit) const
 	hit.point = ray.GetPointAtLength(length);
 	hit.normal = (hit.point - center) / radius;
 	hit.pMaterial = pMaterial;
+	GetSpehereTextureUV(hit.point, hit.textureU, hit.textureV);
 }
 
 bool Sphere::GetBoundingBoxAtTime(float startTime, float endTime, AABB & box) const
 {
-	Vec3 radiusVec = Vec3(radius, radius, radius);
-	box = AABB(center - radiusVec, center + radiusVec);
+	box = GetSphereBoundingBox(center, radius);
 	return true;
 }

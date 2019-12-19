@@ -12,6 +12,7 @@ public:
 
 private:
 	void FillHitRecord(float length, const Ray & ray, HitRecord & hit) const;
+	void GetTextureUV(const Vec3 & point, float & u, float & v) const;
 
 	Vec3 center;
 	float radius;

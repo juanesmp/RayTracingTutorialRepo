@@ -59,14 +59,16 @@ Vec3 GetColorFromRay(const Ray& ray, Hitable* scene, int bounces, int maxRayBoun
 	{
 		Ray scatteredRay;
 		Vec3 attenuation;
+		Vec3 emission = hit.pMaterial->GetEmission(hit.textureU, hit.textureV, hit.point);
 		if (bounces < maxRayBounces && hit.pMaterial->Scatter(ray, hit, attenuation, scatteredRay))
-			return attenuation * GetColorFromRay(scatteredRay, scene, bounces + 1, maxRayBounces);
+			return emission + attenuation * GetColorFromRay(scatteredRay, scene, bounces + 1, maxRayBounces);
 		else
-			return Vec3(0, 0, 0);
+			return emission;
 	}
 	else
 	{
 		return GetBackgroundColor(ray);
+		//return Vec3(0, 0, 0);
 	}
 }
 
