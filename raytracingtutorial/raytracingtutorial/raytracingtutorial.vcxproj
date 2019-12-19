@@ -154,6 +154,7 @@
     <ClInclude Include="AABB.h" />
     <ClInclude Include="BVHNode.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CheckerTexture.h" />
     <ClInclude Include="DielectricMaterial.h" />
     <ClInclude Include="floatutils.h" />
     <ClInclude Include="MetalMaterial.h" />
@@ -166,13 +167,16 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SingleColorTexture.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="BVHNode.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CheckerTexture.cpp" />
     <ClCompile Include="DielectricMaterial.cpp" />
     <ClCompile Include="HitableList.cpp" />
     <ClCompile Include="LambertianMaterial.cpp" />
@@ -188,6 +192,7 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="raytracingtutorial.cpp" />
+    <ClCompile Include="SingleColorTexture.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Vec3.cpp" />
   </ItemGroup>

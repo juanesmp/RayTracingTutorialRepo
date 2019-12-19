@@ -21,11 +21,13 @@ struct OutputParams
 			pixelSizeY = 70;
 			raysPerPixel = 16;
 			maxRayBounces = 10;
+			break;
 		case 1: // low
 			pixelSizeX = 250;
 			pixelSizeY = 150;
 			raysPerPixel = 128;
 			maxRayBounces = 50;
+			break;
 		case 2: // medium
 		default:
 			pixelSizeX = 400;

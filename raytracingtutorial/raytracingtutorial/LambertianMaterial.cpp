@@ -6,7 +6,7 @@ bool LambertianMaterial::Scatter(const Ray & rayIn, const HitRecord & hit, Vec3 
 {
 	Vec3 target = hit.point + hit.normal + GetRandomVec3InUnitSphere();
 	scatteredRay = Ray(hit.point, target - hit.point, rayIn.time);
-	attenuation = albedoColor;
+	attenuation = pAlbedo->Sample(0, 0, hit.point);
 	return true;
 }
 

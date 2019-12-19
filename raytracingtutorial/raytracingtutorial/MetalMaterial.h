@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Material.h"
+#include "Texture.h"
 
 class MetalMaterial : public Material
 {
 public:
-	MetalMaterial(const Vec3& albedo, float fuzz) : albedoColor(albedo) 
+	MetalMaterial(Texture* albedo, float fuzz) : pAlbedo(albedo) 
 	{
 		if (fuzz < 1.0f)
 			fuzzyness = fuzz;
@@ -16,7 +17,7 @@ public:
 	virtual bool Scatter(const Ray & rayIn, const HitRecord & hit, Vec3 & attenuation, Ray & scatteredRay) const override;
 
 private:
-	Vec3 albedoColor;
+	Texture* pAlbedo;
 	float fuzzyness;
 };
 
