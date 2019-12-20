@@ -7,8 +7,8 @@
 
 void GetSpehereTextureUV(const Vec3 & point, float & u, float & v)
 {
-	float phi = float(atan2(point.Z(), point.X()));
-	float theta = float(asin(point.Y()));
+	float phi = atan2f(point.Z(), point.X());
+	float theta = asinf(point.Y());
 	float PI = float(M_PI);
 
 	u = 1 - (phi + PI) / (2.0f * PI);

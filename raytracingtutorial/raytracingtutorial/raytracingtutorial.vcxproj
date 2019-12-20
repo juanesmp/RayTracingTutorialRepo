@@ -173,6 +173,9 @@
     <ClInclude Include="SphereUtils.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Vec3.h" />
+    <ClInclude Include="XYRectangle.h" />
+    <ClInclude Include="XZRectangle.h" />
+    <ClInclude Include="YZRectangle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AABB.cpp" />
@@ -199,6 +202,9 @@
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereUtils.cpp" />
     <ClCompile Include="Vec3.cpp" />
+    <ClCompile Include="XYRectangle.cpp" />
+    <ClCompile Include="XZRectangle.cpp" />
+    <ClCompile Include="YZRectangle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

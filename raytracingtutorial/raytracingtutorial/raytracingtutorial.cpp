@@ -23,8 +23,8 @@ struct OutputParams
 			maxRayBounces = 10;
 			break;
 		case 1: // low
-			pixelSizeX = 250;
-			pixelSizeY = 150;
+			pixelSizeX = 200;
+			pixelSizeY = 120;
 			raysPerPixel = 128;
 			maxRayBounces = 50;
 			break;
@@ -32,7 +32,7 @@ struct OutputParams
 		default:
 			pixelSizeX = 400;
 			pixelSizeY = 280;
-			raysPerPixel = 128;
+			raysPerPixel = 256;
 			maxRayBounces = 50;
 			break;
 		}	
@@ -43,13 +43,6 @@ struct OutputParams
 	int raysPerPixel;
 	int maxRayBounces;
 };
-
-Vec3 GetBackgroundColor(const Ray& r)
-{
-	Vec3 unitDirection = ConvertToUnitVector(r.direction);
-	float t = 0.5f * (unitDirection.Y() + 1);
-	return (1.0f - t) * Vec3(1, 1, 1) + t * Vec3(0.5f, 0.7f, 1);
-}
 
 Vec3 GetColorFromRay(const Ray& ray, Hitable* scene, int bounces, int maxRayBounces)
 {
@@ -67,8 +60,7 @@ Vec3 GetColorFromRay(const Ray& ray, Hitable* scene, int bounces, int maxRayBoun
 	}
 	else
 	{
-		return GetBackgroundColor(ray);
-		//return Vec3(0, 0, 0);
+		return GetBackgroundColor(ray, 2);
 	}
 }
 
@@ -81,10 +73,14 @@ Vec3 GetColorForPixel(int pixelX, int pixelY, Camera* pCamera, Hitable* scene, c
 {
 	Vec3 col(0, 0, 0);
 
+	int mod = int(sqrtf(float(outputParams.raysPerPixel)));
+
 	for (int ray = 0; ray < outputParams.raysPerPixel; ray++)
 	{
-		float rayOffsetU = (ray % 2 == 0) ? 0.25f : 0.75f;
-		float rayOffsetY = (float)ray / (float)outputParams.raysPerPixel;
+		float rayOffsetU = float(ray % mod) / float(mod);		
+		float rayOffsetY = float(ray) / float(outputParams.raysPerPixel);
+		//float rayOffsetU = GetRandom0To1();		
+		//float rayOffsetY = GetRandom0To1();
 		
 		float u = (float(pixelX) + rayOffsetU) / float(outputParams.pixelSizeX);
 		float v = (float(pixelY) + rayOffsetY) / float(outputParams.pixelSizeY);

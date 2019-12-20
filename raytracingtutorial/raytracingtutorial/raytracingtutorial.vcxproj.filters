@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Hitables">
       <UniqueIdentifier>{ee2580db-3d90-4512-a247-96c62d0dab25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Textures">
+      <UniqueIdentifier>{50fb3394-35d6-4e30-8809-331ee1ffb331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Textures">
+      <UniqueIdentifier>{ada04714-3db5-480d-baee-38be9dbb1eff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -78,19 +84,28 @@
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SingleColorTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CheckerTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DiffuseLightMaterial.h">
       <Filter>Header Files\Materials</Filter>
     </ClInclude>
     <ClInclude Include="SphereUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckerTexture.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleColorTexture.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="XYRectangle.h">
+      <Filter>Header Files\Hitables</Filter>
+    </ClInclude>
+    <ClInclude Include="XZRectangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="YZRectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -140,16 +155,25 @@
     <ClCompile Include="BVHNode.cpp">
       <Filter>Source Files\Hitables</Filter>
     </ClCompile>
-    <ClCompile Include="SingleColorTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CheckerTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DiffuseLightMaterial.cpp">
       <Filter>Source Files\Materials</Filter>
     </ClCompile>
     <ClCompile Include="SphereUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckerTexture.cpp">
+      <Filter>Source Files\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleColorTexture.cpp">
+      <Filter>Source Files\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="XYRectangle.cpp">
+      <Filter>Source Files\Hitables</Filter>
+    </ClCompile>
+    <ClCompile Include="XZRectangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="YZRectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

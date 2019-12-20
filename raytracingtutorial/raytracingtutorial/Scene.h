@@ -9,6 +9,8 @@
 #include "BVHNode.h"
 #include "SingleColorTexture.h"
 #include "CheckerTexture.h"
+#include "DiffuseLightMaterial.h"
+#include "XYRectangle.h"
 
 Hitable** CreateBigHitableList(int& i)
 {
@@ -67,7 +69,7 @@ Hitable** CreateSmallHitableList(int & i)
 
 	i = 0;
 
-	Material* pMaterial = new LambertianMaterial(new CheckerTexture(new SingleColorTexture(Vec3(0.1f, 0.1f, 0.3f)), new SingleColorTexture(Vec3(0.8f, 0.8f, 0.8f))));
+	Material* pMaterial = new LambertianMaterial(new CheckerTexture(new SingleColorTexture(Vec3(0.2f, 0.1f, 0.2f)), new SingleColorTexture(Vec3(0.9f, 0.9f, 0.9f))));
 	list[i++] = new Sphere(Vec3(0, -1000, 0), 1000, pMaterial);
 
 	list[i++] = new Sphere(Vec3(0, 1, 0), 1.0f, new DielectricMaterial(1.5f));
@@ -81,6 +83,9 @@ Hitable** CreateSmallHitableList(int & i)
 	pMaterial = new LambertianMaterial(new SingleColorTexture(Vec3(0.4f, 0.2f, 0.8f)));
 	list[i++] = new MovingSphere(Vec3(6, 1, 0), Vec3(5, 0.5f, 2.5f), 0, 0.1f, 0.2f, pMaterial);
 
+	pMaterial = new DiffuseLightMaterial(new SingleColorTexture(Vec3(25.0f, 22.0f, 22.0f)));
+	list[i++] = new XYRectangle(-3, 5, 0.5f, 1, 2, pMaterial);
+
 	return list;
 }
 
@@ -93,4 +98,26 @@ Hitable* CreateScene(float shutterOpenTime, float shutterCloseTime)
 	
 	//return new HitableList(list, count);
 	return new BVHNode(list, count, shutterOpenTime, shutterCloseTime);
+}
+
+Vec3 GetBackgroundColor(const Ray& r, int bgType)
+{
+	switch (bgType)
+	{
+	case 0:
+	{
+		Vec3 unitDirection = ConvertToUnitVector(r.direction);
+		float t = 0.5f * (unitDirection.Y() + 1);
+		return (1.0f - t) * Vec3(1, 1, 1) + t * Vec3(0.5f, 0.7f, 1);
+	}
+	case 1:
+	{
+		Vec3 unitDirection = ConvertToUnitVector(r.direction);
+		float t = 0.5f * (unitDirection.Y() + 1);
+		return (1.0f - t) * Vec3(0.2f, 0.2f, 0.2f) + t * Vec3(0.05f, 0.15f, 0.2f);
+	}
+	case 2:
+	default:
+		return Vec3(0, 0, 0);
+	}
 }
