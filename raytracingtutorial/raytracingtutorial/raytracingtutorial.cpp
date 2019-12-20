@@ -19,7 +19,7 @@ struct OutputParams
 		case 0: // very low
 			pixelSizeX = 100;
 			pixelSizeY = 70;
-			raysPerPixel = 32;
+			raysPerPixel = 512;
 			maxRayBounces = 10;
 			break;
 		case 1: // low

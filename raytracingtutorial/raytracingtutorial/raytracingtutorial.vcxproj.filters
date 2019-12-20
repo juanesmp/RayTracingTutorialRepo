@@ -111,6 +111,9 @@
     <ClInclude Include="FlipNormals.h">
       <Filter>Header Files\Hitables</Filter>
     </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\Hitables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -180,6 +183,9 @@
       <Filter>Source Files\Hitables</Filter>
     </ClCompile>
     <ClCompile Include="FlipNormals.cpp">
+      <Filter>Source Files\Hitables</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
       <Filter>Source Files\Hitables</Filter>
     </ClCompile>
   </ItemGroup>

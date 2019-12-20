@@ -14,6 +14,7 @@
 #include "XZRectangle.h"
 #include "YZRectangle.h"
 #include "FlipNormals.h"
+#include "Box.h"
 
 Hitable** CreateBigHitableList(int& i)
 {
@@ -94,7 +95,7 @@ Hitable** CreateSmallHitableList(int & i)
 
 Hitable** CreateCornellBoxHitableList(int & i)
 {
-	Hitable** list = new Hitable*[6];
+	Hitable** list = new Hitable*[20];
 
 	i = 0;
 
@@ -105,6 +106,8 @@ Hitable** CreateCornellBoxHitableList(int & i)
 	list[i++] = new FlipNormals(new XZRectangle(0, 555, 0, 555, 555, white));
 	list[i++] = new XZRectangle(0, 555, 0, 555, 0, white);
 	list[i++] = new FlipNormals(new XYRectangle(0, 555, 0, 555, 555, white));
+	list[i++] = new Box(Vec3(130, 0, 65), Vec3(295, 165, 230), white);
+	list[i++] = new Box(Vec3(265, 0, 295), Vec3(430, 330, 460), white);
 
 	Material* green = new LambertianMaterial(new SingleColorTexture(Vec3(0.12f, 0.45f, 0.15f)));
 	list[i++] = new FlipNormals(new YZRectangle(0, 555, 0, 555, 555, green));
