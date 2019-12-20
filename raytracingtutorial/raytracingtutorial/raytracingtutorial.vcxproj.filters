@@ -103,10 +103,13 @@
       <Filter>Header Files\Hitables</Filter>
     </ClInclude>
     <ClInclude Include="XZRectangle.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Hitables</Filter>
     </ClInclude>
     <ClInclude Include="YZRectangle.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Hitables</Filter>
+    </ClInclude>
+    <ClInclude Include="FlipNormals.h">
+      <Filter>Header Files\Hitables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -171,10 +174,13 @@
       <Filter>Source Files\Hitables</Filter>
     </ClCompile>
     <ClCompile Include="XZRectangle.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Hitables</Filter>
     </ClCompile>
     <ClCompile Include="YZRectangle.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Hitables</Filter>
+    </ClCompile>
+    <ClCompile Include="FlipNormals.cpp">
+      <Filter>Source Files\Hitables</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

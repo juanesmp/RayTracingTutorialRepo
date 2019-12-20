@@ -157,6 +157,7 @@
     <ClInclude Include="CheckerTexture.h" />
     <ClInclude Include="DielectricMaterial.h" />
     <ClInclude Include="DiffuseLightMaterial.h" />
+    <ClInclude Include="FlipNormals.h" />
     <ClInclude Include="floatutils.h" />
     <ClInclude Include="MetalMaterial.h" />
     <ClInclude Include="MovingSphere.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="CheckerTexture.cpp" />
     <ClCompile Include="DielectricMaterial.cpp" />
     <ClCompile Include="DiffuseLightMaterial.cpp" />
+    <ClCompile Include="FlipNormals.cpp" />
     <ClCompile Include="HitableList.cpp" />
     <ClCompile Include="LambertianMaterial.cpp" />
     <ClCompile Include="Material.cpp" />

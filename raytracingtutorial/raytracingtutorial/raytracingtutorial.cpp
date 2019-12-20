@@ -19,7 +19,7 @@ struct OutputParams
 		case 0: // very low
 			pixelSizeX = 100;
 			pixelSizeY = 70;
-			raysPerPixel = 16;
+			raysPerPixel = 32;
 			maxRayBounces = 10;
 			break;
 		case 1: // low
@@ -94,19 +94,33 @@ Vec3 GetColorForPixel(int pixelX, int pixelY, Camera* pCamera, Hitable* scene, c
 	return CorrectGamma(col);
 }
 
-Camera* CreateCamera(const OutputParams& outputParams, float shutterOpenTime, float shutterCloseTime)
+Camera* CreateCamera(const OutputParams& outputParams, float shutterOpenTime, float shutterCloseTime, int camSetup)
 {
 	CameraParams p;
 
-	p.position = Vec3(8, 1.5f, 2.5f);
-	p.lookAtPoint = Vec3(0, 0, -1);
-	p.upVector = Vec3(0, 1, 0);
-	p.verticalFOV = 45;
+	switch (camSetup)
+	{
+	case 0:
+		p.position = Vec3(8, 1.5f, 2.5f);
+		p.lookAtPoint = Vec3(0, 0, -1);
+		p.upVector = Vec3(0, 1, 0);
+		p.verticalFOV = 45;
+		p.aperture = 0.0001f; // 0.1f
+		break;
+	case 1: // Cornell box
+	default:
+		p.position = Vec3(278, 278, -800);
+		p.lookAtPoint = Vec3(278, 278, 0);
+		p.upVector = Vec3(0, 1, 0);
+		p.verticalFOV = 40;
+		p.aperture = 0.0001f; // 0.1f
+		break;
+	}
+
 	p.aspectRatio = float(outputParams.pixelSizeX) / float(outputParams.pixelSizeY);
-	p.aperture = 0.0001f; // 0.1f
-	p.focusDistance = (p.position - p.lookAtPoint).GetLength();
 	p.shutterOpenTime = shutterOpenTime;
 	p.shutterCloseTime = shutterCloseTime;
+	p.focusDistance = (p.position - p.lookAtPoint).GetLength();
 
 	return new Camera(p);
 }
@@ -117,12 +131,12 @@ int main()
 
 	if (ppmFile.is_open())
 	{
-		OutputParams outputParams(1);
+		OutputParams outputParams(0);
 
 		float shutterOpenTime = 0.06f;
 		float shutterCloseTime = 0.07f;
 		
-		Camera* pCamera = CreateCamera(outputParams, shutterOpenTime, shutterCloseTime);
+		Camera* pCamera = CreateCamera(outputParams, shutterOpenTime, shutterCloseTime, 1);
 		
 		Hitable* scene = CreateScene(shutterOpenTime, shutterCloseTime);
 

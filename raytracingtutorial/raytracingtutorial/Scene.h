@@ -11,6 +11,9 @@
 #include "CheckerTexture.h"
 #include "DiffuseLightMaterial.h"
 #include "XYRectangle.h"
+#include "XZRectangle.h"
+#include "YZRectangle.h"
+#include "FlipNormals.h"
 
 Hitable** CreateBigHitableList(int& i)
 {
@@ -89,13 +92,37 @@ Hitable** CreateSmallHitableList(int & i)
 	return list;
 }
 
+Hitable** CreateCornellBoxHitableList(int & i)
+{
+	Hitable** list = new Hitable*[6];
+
+	i = 0;
+
+	Material* red = new LambertianMaterial(new SingleColorTexture(Vec3(0.65f, 0.05f, 0.05f)));
+	list[i++] = new YZRectangle(0, 555, 0, 555, 0, red);
+
+	Material* white = new LambertianMaterial(new SingleColorTexture(Vec3(0.73f, 0.73f, 0.73f)));
+	list[i++] = new FlipNormals(new XZRectangle(0, 555, 0, 555, 555, white));
+	list[i++] = new XZRectangle(0, 555, 0, 555, 0, white);
+	list[i++] = new FlipNormals(new XYRectangle(0, 555, 0, 555, 555, white));
+
+	Material* green = new LambertianMaterial(new SingleColorTexture(Vec3(0.12f, 0.45f, 0.15f)));
+	list[i++] = new FlipNormals(new YZRectangle(0, 555, 0, 555, 555, green));
+
+	Material* light = new DiffuseLightMaterial(new SingleColorTexture(Vec3(15, 15, 15)));
+	list[i++] = new XZRectangle(213, 343, 227, 332, 554, light);
+
+	return list;
+}
+
 Hitable* CreateScene(float shutterOpenTime, float shutterCloseTime)
 {
 	int count;
 	
-	Hitable** list = CreateSmallHitableList(count);
+	//Hitable** list = CreateSmallHitableList(count);
 	//Hitable** list = CreateBigHitableList(count);
-	
+	Hitable** list = CreateCornellBoxHitableList(count);
+
 	//return new HitableList(list, count);
 	return new BVHNode(list, count, shutterOpenTime, shutterCloseTime);
 }
@@ -104,13 +131,13 @@ Vec3 GetBackgroundColor(const Ray& r, int bgType)
 {
 	switch (bgType)
 	{
-	case 0:
+	case 0: // day light
 	{
 		Vec3 unitDirection = ConvertToUnitVector(r.direction);
 		float t = 0.5f * (unitDirection.Y() + 1);
 		return (1.0f - t) * Vec3(1, 1, 1) + t * Vec3(0.5f, 0.7f, 1);
 	}
-	case 1:
+	case 1:  // evening
 	{
 		Vec3 unitDirection = ConvertToUnitVector(r.direction);
 		float t = 0.5f * (unitDirection.Y() + 1);
