@@ -169,11 +169,13 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="RotateY.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SingleColorTexture.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereUtils.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Translate.h" />
     <ClInclude Include="Vec3.h" />
     <ClInclude Include="XYRectangle.h" />
     <ClInclude Include="XZRectangle.h" />
@@ -202,9 +204,11 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="raytracingtutorial.cpp" />
+    <ClCompile Include="RotateY.cpp" />
     <ClCompile Include="SingleColorTexture.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereUtils.cpp" />
+    <ClCompile Include="Translate.cpp" />
     <ClCompile Include="Vec3.cpp" />
     <ClCompile Include="XYRectangle.cpp" />
     <ClCompile Include="XZRectangle.cpp" />
