@@ -108,8 +108,41 @@ Hitable** CreateCornellBoxHitableList(int & i)
 	list[i++] = new FlipNormals(new XZRectangle(0, 555, 0, 555, 555, white));
 	list[i++] = new XZRectangle(0, 555, 0, 555, 0, white);
 	list[i++] = new FlipNormals(new XYRectangle(0, 555, 0, 555, 555, white));
-	list[i++] = new Translate(new RotateY(new Box(Vec3(0, 0, 0), Vec3(165, 165, 165), white), -18), Vec3(130, 0, 65));
-	list[i++] = new Translate(new RotateY(new Box(Vec3(0, 0, 0), Vec3(165, 330, 165), white), 15), Vec3(265, 0, 295));
+
+	Box* smallBox = new Box(Vec3(0, 0, 0), Vec3(165, 165, 165), white);
+	list[i++] = new Translate(new RotateY(smallBox, -18), Vec3(130, 0, 65));
+	
+	Box* tallerBox = new Box(Vec3(0, 0, 0), Vec3(165, 330, 165), white);
+	list[i++] = new Translate(new RotateY(tallerBox, 15), Vec3(265, 0, 295));
+
+	Material* green = new LambertianMaterial(new SingleColorTexture(Vec3(0.12f, 0.45f, 0.15f)));
+	list[i++] = new FlipNormals(new YZRectangle(0, 555, 0, 555, 555, green));
+
+	Material* light = new DiffuseLightMaterial(new SingleColorTexture(Vec3(15, 15, 15)));
+	list[i++] = new XZRectangle(213, 343, 227, 332, 554, light);
+
+	return list;
+}
+
+Hitable** CreateSampleHitableList(int & i)
+{
+	Hitable** list = new Hitable*[50];
+
+	i = 0;
+
+	Material* floorMtrl = new LambertianMaterial(new SingleColorTexture(Vec3(0.65f, 0.05f, 0.05f)));
+	list[i++] = new YZRectangle(0, 555, 0, 555, 0, floorMtrl);
+
+	Material* white = new LambertianMaterial(new SingleColorTexture(Vec3(0.73f, 0.73f, 0.73f)));
+	list[i++] = new FlipNormals(new XZRectangle(0, 555, 0, 555, 555, white));
+	list[i++] = new XZRectangle(0, 555, 0, 555, 0, white);
+	list[i++] = new FlipNormals(new XYRectangle(0, 555, 0, 555, 555, white));
+
+	Box* smallBox = new Box(Vec3(0, 0, 0), Vec3(165, 165, 165), white);
+	list[i++] = new Translate(new RotateY(smallBox, -18), Vec3(130, 0, 65));
+
+	Box* tallerBox = new Box(Vec3(0, 0, 0), Vec3(165, 330, 165), white);
+	list[i++] = new Translate(new RotateY(tallerBox, 15), Vec3(265, 0, 295));
 
 	Material* green = new LambertianMaterial(new SingleColorTexture(Vec3(0.12f, 0.45f, 0.15f)));
 	list[i++] = new FlipNormals(new YZRectangle(0, 555, 0, 555, 555, green));

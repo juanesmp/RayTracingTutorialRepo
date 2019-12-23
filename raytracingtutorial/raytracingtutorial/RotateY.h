@@ -11,6 +11,8 @@ public:
 	virtual bool GetBoundingBoxAtTime(float startTime, float endTime, AABB & box) const override;
 
 private:
+	void CalculateAABB(AABB aabbBeforeRotation);
+
 	Hitable * pChild;
 	
 	float sinTheta;

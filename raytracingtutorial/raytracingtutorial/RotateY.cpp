@@ -11,8 +11,14 @@ RotateY::RotateY(Hitable* child, float angle) : pChild(child)
 	sinTheta = sinf(radians);
 	cosTheta = cosf(radians);
 
-	hasBox = pChild->GetBoundingBoxAtTime(0, 1, aabb);
+	AABB aabbBeforeRotation;
+	hasBox = pChild->GetBoundingBoxAtTime(0, 1, aabbBeforeRotation);
 
+	CalculateAABB(aabbBeforeRotation);
+}
+
+void RotateY::CalculateAABB(AABB aabbBeforeRotation)
+{
 	Vec3 min(1000000, 1000000, 1000000);
 	Vec3 max(-1000000, -1000000, -1000000);
 
@@ -22,9 +28,9 @@ RotateY::RotateY(Hitable* child, float angle) : pChild(child)
 		{
 			for (int k = 0; k < 2; k++)
 			{
-				float x = i * aabb.GetMax().X() + (1 - i) * aabb.GetMin().X();
-				float y = j * aabb.GetMax().Y() + (1 - j) * aabb.GetMin().Y();
-				float z = k * aabb.GetMax().Z() + (1 - k) * aabb.GetMin().Z();
+				float x = i * aabbBeforeRotation.GetMax().X() + (1 - i) * aabbBeforeRotation.GetMin().X();
+				float y = j * aabbBeforeRotation.GetMax().Y() + (1 - j) * aabbBeforeRotation.GetMin().Y();
+				float z = k * aabbBeforeRotation.GetMax().Z() + (1 - k) * aabbBeforeRotation.GetMin().Z();
 
 				float newX = cosTheta * x + sinTheta * z;
 				float newZ = -sinTheta * x + cosTheta * z;
@@ -35,7 +41,7 @@ RotateY::RotateY(Hitable* child, float angle) : pChild(child)
 				{
 					if (tester.e[c] > max.e[c])
 						max.e[c] = tester.e[c];
-					
+
 					if (tester.e[c] < min.e[c])
 						min.e[c] = tester.e[c];
 				}
@@ -67,8 +73,8 @@ bool RotateY::DoesRayHit(const Ray & ray, float minLength, float maxLength, HitR
 		point.e[0] = cosTheta * hit.point.e[0] + sinTheta * hit.point.e[2];
 		point.e[2] = -sinTheta * hit.point.e[0] + cosTheta * hit.point.e[2];
 
-		normal.e[0] = cosTheta * hit.point.e[0] + sinTheta * hit.normal.e[2];
-		normal.e[2] = -sinTheta * hit.point.e[0] + cosTheta * hit.normal.e[2];
+		normal.e[0] = cosTheta * hit.normal.e[0] + sinTheta * hit.normal.e[2];
+		normal.e[2] = -sinTheta * hit.normal.e[0] + cosTheta * hit.normal.e[2];
 
 		hit.point = point;
 		hit.normal = normal;
@@ -84,3 +90,4 @@ bool RotateY::GetBoundingBoxAtTime(float startTime, float endTime, AABB & box) c
 	box = aabb;
 	return hasBox;
 }
+
