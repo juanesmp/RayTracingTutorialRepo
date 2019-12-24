@@ -144,75 +144,72 @@ Hitable** CreateSampleHitableList(int & i)
 		{
 			int x = -3 + k * 6;
 			int z = -14 + j * 8;
-			list[i++] = new Sphere(Vec3(float(x), 2, float(z)), 0.5f, light);
+			list[i++] = new Sphere(Vec3(float(x), 2.5f, float(z)), 0.5f, light);
 		}
 	}
 
 	Material* dielectric = new DielectricMaterial(1.5f);
 	list[i++] = new Sphere(Vec3(4, 0.5f, 1), 0.5f, dielectric);
 	list[i++] = new Sphere(Vec3(2, 0.5f, -3), 0.5f, dielectric);
+	list[i++] = new Sphere(Vec3(-8, 0.5f, -4), 0.5f, dielectric);
+	list[i++] = new Sphere(Vec3(-10, 0.5f, -10), 0.5f, dielectric);
 	Box* box = new Box(Vec3(0, 0, 0), Vec3(0.5f, 0.5f, 0.5f), dielectric);
 	Vec3 pos = Vec3(4, 0, 2); 
 	//list[i++] = new Translate(new RotateY(box, 5.0f), pos);
 
-	Material * greenL = new MetalMaterial(new SingleColorTexture(Vec3(0.35f, 0.95f, 0.95f)), 0.2f);
+	Material * greenL = new MetalMaterial(new SingleColorTexture(Vec3(0.35f, 0.95f, 0.95f)), 0.15f);
 	box = new Box(Vec3(0, 0, 0), Vec3(1.0f, 2.0f, 2.0f), greenL);
 	pos = Vec3(1.5f, 0, 2);
 	list[i++] = new Translate(new RotateY(box, 25.0f), pos);
 
-	//StripsTexture* redStrips = new StripsTexture(new SingleColorTexture(Vec3(0.95f, 0.15f, 0.15f)), new SingleColorTexture(Vec3(0.4f, 0.1f, 0.1f)));
+	StripsTexture* redStripsTex = new StripsTexture(new SingleColorTexture(Vec3(0.95f, 0.25f, 0.15f)), new SingleColorTexture(Vec3(0.4f, 0.1f, 0.1f)));
+	StripsTexture* greenStripsTex = new StripsTexture(new SingleColorTexture(Vec3(0.12f, 0.95f, 0.25f)), new SingleColorTexture(Vec3(0.12f, 0.4f, 0.15f)));
+	StripsTexture* blueStripsTex = new StripsTexture(new SingleColorTexture(Vec3(0.12f, 0.35f, 0.95f)), new SingleColorTexture(Vec3(0.12f, 0.15f, 0.4f)));
+	
+	Material* redStrips = new MetalMaterial(redStripsTex, 0.02f);
+	Material* greenStrips = new MetalMaterial(greenStripsTex, 0.1f);
+	Material* blueStrips = new MetalMaterial(blueStripsTex, 0.06f);
+
 	Material* red = new MetalMaterial(new SingleColorTexture(Vec3(0.85f, 0.15f, 0.15f)), 0.02f);
 	Material* green = new MetalMaterial(new SingleColorTexture(Vec3(0.12f, 0.85f, 0.15f)), 0.1f);
-	Material* blue = new MetalMaterial(new SingleColorTexture(Vec3(0.12f, 0.15f, 0.85f)), 0.08f);
+	Material* blue = new MetalMaterial(new SingleColorTexture(Vec3(0.12f, 0.15f, 0.85f)), 0.06f);
 
-	for (int j = 0; j < 30; j++)
+	for (int j = 0; j < 50; j++)
 	{
 		Material* mtrl;
-		switch (j % 3)
+		switch (j % 6)
 		{
 		case 0: mtrl = red; break;
 		case 1: mtrl = blue; break;
-		default: mtrl = green; break;
+		case 2: mtrl = green; break;
+		case 3: mtrl = redStrips; break;
+		case 4: mtrl = blueStrips; break;
+		default: mtrl = greenStrips; break;
 		}
 
 		Box* box = new Box(Vec3(0, 0, 0), Vec3(1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f), mtrl);
-		Vec3 pos = Vec3(-10.f - GetRandom0To1() * 15.0f, 0, -20.0f + GetRandom0To1() * 40.0f);
+		Vec3 pos = Vec3(-10.f - GetRandom0To1() * 15.0f, -0.5f, -20.0f + GetRandom0To1() * 40.0f);
 		list[i++] = new Translate(new RotateY(box, GetRandom0To1() * 25.0f), pos);
 	}
 
-	for (int j = 0; j < 30; j++)
+	for (int j = 0; j < 50; j++)
 	{
 		Material* mtrl;
-		switch (j % 3)
+		switch (j % 6)
 		{
 		case 0: mtrl = red; break;
 		case 1: mtrl = blue; break;
-		default: mtrl = green; break;
+		case 2: mtrl = green; break;
+		case 3: mtrl = redStrips; break;
+		case 4: mtrl = blueStrips; break;
+		default: mtrl = greenStrips; break;
 		}
 
-		Box* box = new Box(Vec3(0, 0, 0), Vec3(1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f), mtrl);
-		Vec3 pos = Vec3(+10.f + GetRandom0To1() * 15.0f, 0, -20.0f + GetRandom0To1() * 40.0f);
+		Box* box = new Box(Vec3(0, 0, 0), Vec3(2.0f + GetRandom0To1() * 6.0f, 2.0f + GetRandom0To1() * 6.0f, 2.0f + GetRandom0To1() * 6.0f), mtrl);
+		Vec3 pos = Vec3(+10.f + GetRandom0To1() * 15.0f, -0.5f, -70.0f + GetRandom0To1() * 80.0f);
 		list[i++] = new Translate(new RotateY(box, GetRandom0To1() * 25.0f), pos);
 	}
 
-/*
-	Material* white = new LambertianMaterial(new SingleColorTexture(Vec3(0.73f, 0.73f, 0.73f)));
-	list[i++] = new FlipNormals(new XZRectangle(0, 555, 0, 555, 555, white));
-	list[i++] = new XZRectangle(0, 555, 0, 555, 0, white);
-	list[i++] = new FlipNormals(new XYRectangle(0, 555, 0, 555, 555, white));
-
-	Box* smallBox = new Box(Vec3(0, 0, 0), Vec3(165, 165, 165), white);
-	list[i++] = new Translate(new RotateY(smallBox, -18), Vec3(130, 0, 65));
-
-	Box* tallerBox = new Box(Vec3(0, 0, 0), Vec3(165, 330, 165), white);
-	list[i++] = new Translate(new RotateY(tallerBox, 15), Vec3(265, 0, 295));
-
-	Material* green = new LambertianMaterial(new SingleColorTexture(Vec3(0.12f, 0.45f, 0.15f)));
-	list[i++] = new FlipNormals(new YZRectangle(0, 555, 0, 555, 555, green));
-
-	Material* light = new DiffuseLightMaterial(new SingleColorTexture(Vec3(15, 15, 15)));
-	list[i++] = new XZRectangle(213, 343, 227, 332, 554, light);
-*/
 	return list;
 }
 
@@ -243,7 +240,7 @@ Vec3 GetBackgroundColor(const Ray& r, int bgType)
 	{
 		Vec3 unitDirection = ConvertToUnitVector(r.direction);
 		float t = 0.5f * (unitDirection.Y() + 1);
-		return (1.0f - t) * Vec3(0.4f, 0.4f, 0.4f) + t * Vec3(0.15f, 0.25f, 0.3f);
+		return (1.0f - t) * Vec3(0.4f, 0.4f, 0.4f) + t * Vec3(0.25f, 0.35f, 0.6f);
 	}
 	case 2:
 	default:

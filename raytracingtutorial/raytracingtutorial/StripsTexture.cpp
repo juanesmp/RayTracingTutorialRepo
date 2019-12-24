@@ -3,7 +3,7 @@
 
 Vec3 StripsTexture::Sample(float u, float v, const Vec3 & point) const
 {
-	float sines = sinf(3 * point.Y()) * sinf(3 * point.Z());
-	return sines < 0 ? pOddTexture->Sample(u, v, point) : pEvenTexture->Sample(u, v, point);
+	bool even = (int(u * 24) % 2 == 0);
+	return even ? pEvenTexture->Sample(u, v, point) : pOddTexture->Sample(u, v, point);
 }
 
