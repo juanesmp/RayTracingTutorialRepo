@@ -240,7 +240,8 @@ Vec3 GetBackgroundColor(const Ray& r, int bgType)
 	{
 		Vec3 unitDirection = ConvertToUnitVector(r.direction);
 		float t = 0.5f * (unitDirection.Y() + 1);
-		return (1.0f - t) * Vec3(0.4f, 0.4f, 0.4f) + t * Vec3(0.25f, 0.35f, 0.6f);
+		//return (1.0f - t) * Vec3(0.2f, 0.2f, 0.2f) + t * Vec3(0.125f, 0.15f, 0.3f);
+		return (1.0f - t) * Vec3(0.1f, 0.1f, 0.1f) + t * Vec3(0.05f, 0.065f, 0.12f);
 	}
 	case 2:
 	default:
