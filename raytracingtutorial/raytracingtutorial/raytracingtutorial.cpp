@@ -32,7 +32,7 @@ struct OutputParams
 		default:
 			pixelSizeX = 400;
 			pixelSizeY = 280;
-			raysPerPixel = 256;
+			raysPerPixel = 10000;
 			maxRayBounces = 50;
 			break;
 		}	
@@ -60,7 +60,7 @@ Vec3 GetColorFromRay(const Ray& ray, Hitable* scene, int bounces, int maxRayBoun
 	}
 	else
 	{
-		return GetBackgroundColor(ray, 2);
+		return GetBackgroundColor(ray, 1);
 	}
 }
 
@@ -131,12 +131,12 @@ int main()
 
 	if (ppmFile.is_open())
 	{
-		OutputParams outputParams(1);
+		OutputParams outputParams(2);
 
 		float shutterOpenTime = 0.06f;
 		float shutterCloseTime = 0.07f;
 		
-		Camera* pCamera = CreateCamera(outputParams, shutterOpenTime, shutterCloseTime, 1);
+		Camera* pCamera = CreateCamera(outputParams, shutterOpenTime, shutterCloseTime, 0);
 		
 		Hitable* scene = CreateScene(shutterOpenTime, shutterCloseTime);
 

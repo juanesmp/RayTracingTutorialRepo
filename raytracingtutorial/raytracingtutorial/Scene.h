@@ -9,6 +9,7 @@
 #include "BVHNode.h"
 #include "SingleColorTexture.h"
 #include "CheckerTexture.h"
+#include "StripsTexture.h"
 #include "DiffuseLightMaterial.h"
 #include "XYRectangle.h"
 #include "XZRectangle.h"
@@ -126,13 +127,75 @@ Hitable** CreateCornellBoxHitableList(int & i)
 
 Hitable** CreateSampleHitableList(int & i)
 {
-	Hitable** list = new Hitable*[50];
+	Hitable** list = new Hitable*[500];
 
 	i = 0;
 
-	Material* floorMtrl = new LambertianMaterial(new SingleColorTexture(Vec3(0.65f, 0.05f, 0.05f)));
-	list[i++] = new YZRectangle(0, 555, 0, 555, 0, floorMtrl);
+	CheckerTexture* checker = new CheckerTexture(new SingleColorTexture(Vec3(0.8f, 0.5f, 0.5f)), new SingleColorTexture(Vec3(0.9f, 0.9f, 0.9f)));
+	Material* floorMtrl = new LambertianMaterial(checker);
+	list[i++] = new Sphere(Vec3(0, -1000, 0), 1000, floorMtrl);
 
+	Material* light = new DiffuseLightMaterial(new SingleColorTexture(Vec3(15, 13, 8)));
+	//list[i++] = new Sphere(Vec3(3, 2, 2), 0.5f, light);
+
+	for (int j = 0; j < 5; j++)
+	{
+		for (int k = 0; k < 3; k++)
+		{
+			int x = -3 + k * 6;
+			int z = -14 + j * 8;
+			list[i++] = new Sphere(Vec3(float(x), 2, float(z)), 0.5f, light);
+		}
+	}
+
+	Material* dielectric = new DielectricMaterial(1.5f);
+	list[i++] = new Sphere(Vec3(4, 0.5f, 1), 0.5f, dielectric);
+	list[i++] = new Sphere(Vec3(2, 0.5f, -3), 0.5f, dielectric);
+	Box* box = new Box(Vec3(0, 0, 0), Vec3(0.5f, 0.5f, 0.5f), dielectric);
+	Vec3 pos = Vec3(4, 0, 2); 
+	//list[i++] = new Translate(new RotateY(box, 5.0f), pos);
+
+	Material * greenL = new MetalMaterial(new SingleColorTexture(Vec3(0.35f, 0.95f, 0.95f)), 0.2f);
+	box = new Box(Vec3(0, 0, 0), Vec3(1.0f, 2.0f, 2.0f), greenL);
+	pos = Vec3(1.5f, 0, 2);
+	list[i++] = new Translate(new RotateY(box, 25.0f), pos);
+
+	//StripsTexture* redStrips = new StripsTexture(new SingleColorTexture(Vec3(0.95f, 0.15f, 0.15f)), new SingleColorTexture(Vec3(0.4f, 0.1f, 0.1f)));
+	Material* red = new MetalMaterial(new SingleColorTexture(Vec3(0.85f, 0.15f, 0.15f)), 0.02f);
+	Material* green = new MetalMaterial(new SingleColorTexture(Vec3(0.12f, 0.85f, 0.15f)), 0.1f);
+	Material* blue = new MetalMaterial(new SingleColorTexture(Vec3(0.12f, 0.15f, 0.85f)), 0.08f);
+
+	for (int j = 0; j < 30; j++)
+	{
+		Material* mtrl;
+		switch (j % 3)
+		{
+		case 0: mtrl = red; break;
+		case 1: mtrl = blue; break;
+		default: mtrl = green; break;
+		}
+
+		Box* box = new Box(Vec3(0, 0, 0), Vec3(1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f), mtrl);
+		Vec3 pos = Vec3(-10.f - GetRandom0To1() * 15.0f, 0, -20.0f + GetRandom0To1() * 40.0f);
+		list[i++] = new Translate(new RotateY(box, GetRandom0To1() * 25.0f), pos);
+	}
+
+	for (int j = 0; j < 30; j++)
+	{
+		Material* mtrl;
+		switch (j % 3)
+		{
+		case 0: mtrl = red; break;
+		case 1: mtrl = blue; break;
+		default: mtrl = green; break;
+		}
+
+		Box* box = new Box(Vec3(0, 0, 0), Vec3(1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f), mtrl);
+		Vec3 pos = Vec3(+10.f + GetRandom0To1() * 15.0f, 0, -20.0f + GetRandom0To1() * 40.0f);
+		list[i++] = new Translate(new RotateY(box, GetRandom0To1() * 25.0f), pos);
+	}
+
+/*
 	Material* white = new LambertianMaterial(new SingleColorTexture(Vec3(0.73f, 0.73f, 0.73f)));
 	list[i++] = new FlipNormals(new XZRectangle(0, 555, 0, 555, 555, white));
 	list[i++] = new XZRectangle(0, 555, 0, 555, 0, white);
@@ -149,7 +212,7 @@ Hitable** CreateSampleHitableList(int & i)
 
 	Material* light = new DiffuseLightMaterial(new SingleColorTexture(Vec3(15, 15, 15)));
 	list[i++] = new XZRectangle(213, 343, 227, 332, 554, light);
-
+*/
 	return list;
 }
 
@@ -159,7 +222,8 @@ Hitable* CreateScene(float shutterOpenTime, float shutterCloseTime)
 	
 	//Hitable** list = CreateSmallHitableList(count);
 	//Hitable** list = CreateBigHitableList(count);
-	Hitable** list = CreateCornellBoxHitableList(count);
+	//Hitable** list = CreateCornellBoxHitableList(count);
+	Hitable** list = CreateSampleHitableList(count);
 
 	//return new HitableList(list, count);
 	return new BVHNode(list, count, shutterOpenTime, shutterCloseTime);
@@ -179,7 +243,7 @@ Vec3 GetBackgroundColor(const Ray& r, int bgType)
 	{
 		Vec3 unitDirection = ConvertToUnitVector(r.direction);
 		float t = 0.5f * (unitDirection.Y() + 1);
-		return (1.0f - t) * Vec3(0.2f, 0.2f, 0.2f) + t * Vec3(0.05f, 0.15f, 0.2f);
+		return (1.0f - t) * Vec3(0.4f, 0.4f, 0.4f) + t * Vec3(0.15f, 0.25f, 0.3f);
 	}
 	case 2:
 	default:

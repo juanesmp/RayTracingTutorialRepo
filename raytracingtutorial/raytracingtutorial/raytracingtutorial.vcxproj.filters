@@ -120,6 +120,9 @@
     <ClInclude Include="RotateY.h">
       <Filter>Header Files\Hitables</Filter>
     </ClInclude>
+    <ClInclude Include="StripsTexture.h">
+      <Filter>Header Files\Textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -199,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="RotateY.cpp">
       <Filter>Source Files\Hitables</Filter>
+    </ClCompile>
+    <ClCompile Include="StripsTexture.cpp">
+      <Filter>Source Files\Textures</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
