@@ -18,6 +18,7 @@
 #include "Box.h"
 #include "Translate.h"
 #include "RotateY.h"
+#include "ConstantMedium.h"
 
 Hitable** CreateBigHitableList(int& i)
 {
@@ -87,11 +88,15 @@ Hitable** CreateSmallHitableList(int & i)
 	pMaterial = new MetalMaterial(new SingleColorTexture(Vec3(0.7f, 0.6f, 0.5f)), 0);
 	list[i++] = new Sphere(Vec3(4, 1, 0), 1.0f, pMaterial);
 
+	pMaterial = new LambertianMaterial(new SingleColorTexture(Vec3(1, 1, 1)));
+	Sphere * s = new Sphere(Vec3(3, 1, 2), 1.0f, pMaterial);
+	list[i++] = new ConstantMedium(s, 0.5f, new SingleColorTexture(Vec3(1, 1, 1)));
+
 	pMaterial = new LambertianMaterial(new SingleColorTexture(Vec3(0.4f, 0.2f, 0.8f)));
 	list[i++] = new MovingSphere(Vec3(6, 1, 0), Vec3(5, 0.5f, 2.5f), 0, 0.1f, 0.2f, pMaterial);
 
-	pMaterial = new DiffuseLightMaterial(new SingleColorTexture(Vec3(25.0f, 22.0f, 22.0f)));
-	list[i++] = new XYRectangle(-3, 5, 0.5f, 1, 2, pMaterial);
+	//pMaterial = new DiffuseLightMaterial(new SingleColorTexture(Vec3(25.0f, 22.0f, 22.0f)));
+	//list[i++] = new XYRectangle(-3, 5, 0.5f, 1, 2, pMaterial);
 
 	return list;
 }
@@ -135,14 +140,14 @@ Hitable** CreateSampleHitableList(int & i)
 	Material* floorMtrl = new LambertianMaterial(checker);
 	list[i++] = new Sphere(Vec3(0, -1000, 0), 1000, floorMtrl);
 
-	Material* light = new DiffuseLightMaterial(new SingleColorTexture(Vec3(15, 13, 8)));
+	Material* light = new DiffuseLightMaterial(new SingleColorTexture(Vec3(30, 24, 18)));
 	//list[i++] = new Sphere(Vec3(3, 2, 2), 0.5f, light);
 
 	for (int j = 0; j < 5; j++)
 	{
-		for (int k = 0; k < 3; k++)
+		for (int k = 0; k < 4; k++)
 		{
-			int x = -3 + k * 6;
+			int x = -9 + k * 6;
 			int z = -14 + j * 8;
 			list[i++] = new Sphere(Vec3(float(x), 2.5f, float(z)), 0.5f, light);
 		}
@@ -152,7 +157,11 @@ Hitable** CreateSampleHitableList(int & i)
 	list[i++] = new Sphere(Vec3(4, 0.5f, 1), 0.5f, dielectric);
 	list[i++] = new Sphere(Vec3(2, 0.5f, -3), 0.5f, dielectric);
 	list[i++] = new Sphere(Vec3(-8, 0.5f, -4), 0.5f, dielectric);
-	list[i++] = new Sphere(Vec3(-10, 0.5f, -10), 0.5f, dielectric);
+	list[i++] = new Sphere(Vec3(-5, 0.5f, -8), 0.5f, dielectric);
+	Sphere* sp = new Sphere(Vec3(6, 0.5f, 0), 0.5f, dielectric);
+	list[i++] = sp;
+	list[i++] = new ConstantMedium(sp, 3.1f, new SingleColorTexture(Vec3(0.2f, 0.4f, 0.9f)));
+
 	Box* box = new Box(Vec3(0, 0, 0), Vec3(0.5f, 0.5f, 0.5f), dielectric);
 	Vec3 pos = Vec3(4, 0, 2); 
 	//list[i++] = new Translate(new RotateY(box, 5.0f), pos);
@@ -166,15 +175,15 @@ Hitable** CreateSampleHitableList(int & i)
 	StripsTexture* greenStripsTex = new StripsTexture(new SingleColorTexture(Vec3(0.12f, 0.95f, 0.25f)), new SingleColorTexture(Vec3(0.12f, 0.4f, 0.15f)));
 	StripsTexture* blueStripsTex = new StripsTexture(new SingleColorTexture(Vec3(0.12f, 0.35f, 0.95f)), new SingleColorTexture(Vec3(0.12f, 0.15f, 0.4f)));
 	
-	Material* redStrips = new MetalMaterial(redStripsTex, 0.02f);
-	Material* greenStrips = new MetalMaterial(greenStripsTex, 0.1f);
-	Material* blueStrips = new MetalMaterial(blueStripsTex, 0.06f);
+	Material* redStrips = new MetalMaterial(redStripsTex, 0.04f);
+	Material* greenStrips = new MetalMaterial(greenStripsTex, 0.06f);
+	Material* blueStrips = new MetalMaterial(blueStripsTex, 0.07f);
 
-	Material* red = new MetalMaterial(new SingleColorTexture(Vec3(0.85f, 0.15f, 0.15f)), 0.02f);
-	Material* green = new MetalMaterial(new SingleColorTexture(Vec3(0.12f, 0.85f, 0.15f)), 0.1f);
-	Material* blue = new MetalMaterial(new SingleColorTexture(Vec3(0.12f, 0.15f, 0.85f)), 0.06f);
+	Material* red = new MetalMaterial(new SingleColorTexture(Vec3(0.95f, 0.35f, 0.35f)), 0.04f);
+	Material* green = new MetalMaterial(new SingleColorTexture(Vec3(0.22f, 0.95f, 0.25f)), 0.06f);
+	Material* blue = new MetalMaterial(new SingleColorTexture(Vec3(0.32f, 0.35f, 0.95f)), 0.07f);
 
-	for (int j = 0; j < 50; j++)
+	for (int j = 0; j < 40; j++)
 	{
 		Material* mtrl;
 		switch (j % 6)
@@ -188,11 +197,12 @@ Hitable** CreateSampleHitableList(int & i)
 		}
 
 		Box* box = new Box(Vec3(0, 0, 0), Vec3(1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f, 1.0f + GetRandom0To1() * 4.0f), mtrl);
-		Vec3 pos = Vec3(-10.f - GetRandom0To1() * 15.0f, -0.5f, -20.0f + GetRandom0To1() * 40.0f);
-		list[i++] = new Translate(new RotateY(box, GetRandom0To1() * 25.0f), pos);
+		Vec3 pos = Vec3(-10.f - GetRandom0To1() * 15.0f, -0.5f, -32.0f + GetRandom0To1() * 40.0f);
+		//list[i++] = new Translate(new RotateY(box, GetRandom0To1() * 25.0f), pos);
+		list[i++] = new Translate(box, pos);
 	}
 
-	for (int j = 0; j < 50; j++)
+	for (int j = 0; j < 35; j++)
 	{
 		Material* mtrl;
 		switch (j % 6)
@@ -206,9 +216,16 @@ Hitable** CreateSampleHitableList(int & i)
 		}
 
 		Box* box = new Box(Vec3(0, 0, 0), Vec3(2.0f + GetRandom0To1() * 6.0f, 2.0f + GetRandom0To1() * 6.0f, 2.0f + GetRandom0To1() * 6.0f), mtrl);
-		Vec3 pos = Vec3(+10.f + GetRandom0To1() * 15.0f, -0.5f, -70.0f + GetRandom0To1() * 80.0f);
-		list[i++] = new Translate(new RotateY(box, GetRandom0To1() * 25.0f), pos);
+		Vec3 pos = Vec3(+10.f + GetRandom0To1() * 15.0f, -0.5f, -65.0f + GetRandom0To1() * 80.0f);
+		//list[i++] = new Translate(new RotateY(box, GetRandom0To1() * 25.0f), pos);
+		list[i++] = new Translate(box, pos);
 	}
+
+	Material* white = new LambertianMaterial(new SingleColorTexture(Vec3(1, 1, 1)));
+	Box * b = new Box(Vec3(-9, 0.5f, -20), Vec3(9, 7, 20), white);
+	list[i++] = new ConstantMedium(b, 0.002f, new SingleColorTexture(Vec3(1, 1, 1)));
+	b = new Box(Vec3(-18, 0.5f, -30), Vec3(-9, 7, 10), white);
+	list[i++] = new ConstantMedium(b, 0.002f, new SingleColorTexture(Vec3(1, 1, 1)));
 
 	return list;
 }
@@ -241,7 +258,7 @@ Vec3 GetBackgroundColor(const Ray& r, int bgType)
 		Vec3 unitDirection = ConvertToUnitVector(r.direction);
 		float t = 0.5f * (unitDirection.Y() + 1);
 		//return (1.0f - t) * Vec3(0.2f, 0.2f, 0.2f) + t * Vec3(0.125f, 0.15f, 0.3f);
-		return (1.0f - t) * Vec3(0.1f, 0.1f, 0.1f) + t * Vec3(0.05f, 0.065f, 0.12f);
+		return (1.0f - t) * Vec3(0.15f, 0.15f, 0.15f) + t * Vec3(0.075f, 0.1f, 0.15f);
 	}
 	case 2:
 	default:

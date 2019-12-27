@@ -1,8 +1,9 @@
 #include "pch.h"
 #include <stdlib.h>
 #include "BVHNode.h"
+#include "Random.h"
 
-int CompareBoxes(const void * a, const void * b)
+int CompareBoxesInX(const void * a, const void * b)
 {
 	Hitable * hitableA = *(Hitable**)a;
 	Hitable * hitableB = *(Hitable**)b;
@@ -17,9 +18,46 @@ int CompareBoxes(const void * a, const void * b)
 		return 1;
 }
 
+int CompareBoxesInY(const void * a, const void * b)
+{
+	Hitable * hitableA = *(Hitable**)a;
+	Hitable * hitableB = *(Hitable**)b;
+
+	AABB boxA, boxB;
+	hitableA->GetBoundingBoxAtTime(0, 0, boxA);
+	hitableB->GetBoundingBoxAtTime(0, 0, boxB);
+
+	if (boxA.GetMin().Y() < boxB.GetMin().Y())
+		return -1;
+	else
+		return 1;
+}
+
+int CompareBoxesInZ(const void * a, const void * b)
+{
+	Hitable * hitableA = *(Hitable**)a;
+	Hitable * hitableB = *(Hitable**)b;
+
+	AABB boxA, boxB;
+	hitableA->GetBoundingBoxAtTime(0, 0, boxA);
+	hitableB->GetBoundingBoxAtTime(0, 0, boxB);
+
+	if (boxA.GetMin().Z() < boxB.GetMin().Z())
+		return -1;
+	else
+		return 1;
+}
+
 BVHNode::BVHNode(Hitable ** hitableList, int hitableCount, float startTime, float endTime)
 {
-	qsort(hitableList, hitableCount, sizeof(Hitable*), CompareBoxes);
+	float axis = GetRandom0To1() * 3.0f;
+
+	if (axis < 1)
+		qsort(hitableList, hitableCount, sizeof(Hitable*), CompareBoxesInX);
+	else if (axis < 2)
+		qsort(hitableList, hitableCount, sizeof(Hitable*), CompareBoxesInY);
+	else
+		qsort(hitableList, hitableCount, sizeof(Hitable*), CompareBoxesInZ);
 
 	switch (hitableCount)
 	{

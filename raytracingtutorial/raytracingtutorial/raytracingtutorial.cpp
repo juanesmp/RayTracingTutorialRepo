@@ -18,24 +18,30 @@ struct OutputParams
 		{
 		case 0: // very low
 			pixelSizeX = 100;
-			pixelSizeY = 70;
+			pixelSizeY = 60;
 			raysPerPixel = 32;
 			maxRayBounces = 10;
 			break;
 		case 1: // low
 			pixelSizeX = 200;
 			pixelSizeY = 120;
-			raysPerPixel = 128;
+			raysPerPixel = 512;
 			maxRayBounces = 50;
 			break;
 		case 2: // medium
-		default:
 			pixelSizeX = 400;
-			pixelSizeY = 280;
+			pixelSizeY = 240;
+			raysPerPixel = 4096;
+			maxRayBounces = 50;
+			break;
+		case 3: // high
+		default:
+			pixelSizeX = 600;
+			pixelSizeY = 360;
 			raysPerPixel = 10000;
 			maxRayBounces = 50;
 			break;
-		}	
+		}
 	};
 
 	int pixelSizeX;
@@ -131,7 +137,7 @@ int main()
 
 	if (ppmFile.is_open())
 	{
-		OutputParams outputParams(2);
+		OutputParams outputParams(3);
 
 		float shutterOpenTime = 0.06f;
 		float shutterCloseTime = 0.07f;

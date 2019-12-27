@@ -156,10 +156,12 @@
     <ClInclude Include="BVHNode.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheckerTexture.h" />
+    <ClInclude Include="ConstantMedium.h" />
     <ClInclude Include="DielectricMaterial.h" />
     <ClInclude Include="DiffuseLightMaterial.h" />
     <ClInclude Include="FlipNormals.h" />
     <ClInclude Include="floatutils.h" />
+    <ClInclude Include="IsotropicMaterial.h" />
     <ClInclude Include="MetalMaterial.h" />
     <ClInclude Include="MovingSphere.h" />
     <ClInclude Include="Random.h" />
@@ -188,10 +190,12 @@
     <ClCompile Include="BVHNode.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CheckerTexture.cpp" />
+    <ClCompile Include="ConstantMedium.cpp" />
     <ClCompile Include="DielectricMaterial.cpp" />
     <ClCompile Include="DiffuseLightMaterial.cpp" />
     <ClCompile Include="FlipNormals.cpp" />
     <ClCompile Include="HitableList.cpp" />
+    <ClCompile Include="IsotropicMaterial.cpp" />
     <ClCompile Include="LambertianMaterial.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MetalMaterial.cpp" />
